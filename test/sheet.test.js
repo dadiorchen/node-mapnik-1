@@ -1,7 +1,8 @@
 const mapnik = require('mapnik');
 const fs = require('fs');
+const log = require("loglevel");
 
-describe("sheet", async () => {
+describe("sheet", () => {
 
   it("world map", async () => {
 
@@ -28,6 +29,12 @@ describe("sheet", async () => {
         });
       });
     });
+  });
+
+  it("version", async () => {
+    log.warn("mapnik:", mapnik);
+    expect(mapnik).toHaveProperty("version", "4.5.6");
+    expect(mapnik.versions).toHaveProperty("mapnik", "4.0.0");
   });
 
   it.only("trees table map", async () => {
