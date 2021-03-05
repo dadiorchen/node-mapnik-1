@@ -83,7 +83,7 @@ describe("sheet", () => {
 
   });
 
-  it.only("tile", async () => {
+  it("tile", async () => {
     const mapnik = require('mapnik')
     const mercator = require('../greenstand/sphericalmercator')
     mapnik.register_default_fonts();
@@ -115,6 +115,11 @@ describe("sheet", () => {
         });
       });
     });
+  });
+
+  it.only("tile server", async () => {
+    const res = await supertest(app).get("/1/1/1.png");
+    expect(res.statusCode).toBe(200);
   });
 
 });
