@@ -1,6 +1,9 @@
 const mapnik = require('mapnik');
 const fs = require('fs');
 const log = require("loglevel");
+const express = require("express");
+const supertest = require("supertest");
+const app = require("../greenstand/app");
 
 describe("sheet", () => {
 
@@ -46,7 +49,7 @@ describe("sheet", () => {
     expect(map).toHaveProperty("extent");
   });
 
-  it.only("trees table map", async () => {
+  it("trees table map", async () => {
 
     // register fonts and datasource plugins
     mapnik.register_default_fonts();
@@ -73,4 +76,11 @@ describe("sheet", () => {
       });
     });
   });
+
+  it.only("server", async () => {
+    const res = await supertest(app).get("/");
+    expect(res.statusCode).toBe(200);
+
+  });
+
 });
