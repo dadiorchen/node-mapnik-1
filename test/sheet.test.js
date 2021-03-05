@@ -77,10 +77,44 @@ describe("sheet", () => {
     });
   });
 
-  it.only("server", async () => {
+  it("server", async () => {
     const res = await supertest(app).get("/");
     expect(res.statusCode).toBe(200);
 
+  });
+
+  it.only("tile", async () => {
+    const mapnik = require('mapnik')
+    const mercator = require('../greenstand/sphericalmercator')
+    mapnik.register_default_fonts();
+    mapnik.register_default_input_plugins();
+    const map = await new Promise((res, rej) => {
+      const mapInstance = new mapnik.Map(256, 256);
+      mapInstance.load("./test/stylesheet.xml", {strict: true},function(err,_map) {
+  //      if (options.bufferSize) {
+  //        obj.bufferSize = options.bufferSize;
+  //      }
+        res(_map);
+      });
+    });
+    expect(map).toBeDefined();
+    // bbox for x,y,z
+    var bbox = mercator.xyz_to_envelope(1, 1, 3, false);
+    map.extent = bbox;
+    var im = new mapnik.Image(256, 256);
+    const r = await new Promise((res, rej) => {
+      map.render(im, function(err, im) {
+        if(err) throw err;
+        im.encode('png', function(err,buffer) {
+          if (err) throw err;
+          fs.writeFile('/tmp/test/tile.png',buffer, function(err) {
+            if (err) throw err;
+            console.log('saved map image to map.png');
+            res();
+          });
+        });
+      });
+    });
   });
 
 });
