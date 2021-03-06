@@ -123,7 +123,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
     map.render(grid, {layer:"l1", fields:['id']}, function(err, grid) {
       if (err) throw err;
       console.log(grid);
-      const json = grid.encodeSync({resolution: 1, features: true});
+      const json = grid.encodeSync({resolution: 4, features: true});
       res(json);
     });
   });

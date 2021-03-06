@@ -46,6 +46,10 @@
       console.log('click nothing');
     }
   });
+  console.warn("utf:", utfGridLayer);
+  utfGridLayer.on('mouseover', function (e) {
+    console.log("e:", e);
+  });
   utfGridLayer.addTo(mymap);
 //  mymap.addLayer(utfGridLayer);
 
