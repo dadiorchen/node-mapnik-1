@@ -30,7 +30,7 @@
     <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
   </Rule>
 </Style>
-<Layer name="layer0"
+<Layer name="l1"
   cache-features="true"
   srs="+proj=longlat +datum=WGS84 +no_defs"
   >

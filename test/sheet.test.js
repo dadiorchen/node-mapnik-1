@@ -117,9 +117,56 @@ describe("sheet", () => {
     });
   });
 
-  it.only("tile server", async () => {
+  it("tile server", async () => {
     const res = await supertest(app).get("/0/0/0.png");
     expect(res.statusCode).toBe(200);
   }, 1000*60);
+
+  it.only("grid", async () => {
+    const mapnik = require('mapnik')
+    mapnik.register_default_fonts();
+    mapnik.register_default_input_plugins();
+    const map = await new Promise((res, rej) => {
+      const mapInstance = new mapnik.Map(256, 256);
+      mapInstance.load("./test/postgis.xml", {strict: true},function(err,_map) {
+  //      if (options.bufferSize) {
+  //        obj.bufferSize = options.bufferSize;
+  //      }
+        res(_map);
+      });
+    });
+    expect(map).toHaveProperty("layers");
+    const layers = map.layers();
+    console.log("layers:", layers);
+    for(const layer of layers){
+      console.log("lay:", layer.describe());
+    }
+    map.zoomAll();
+    
+    expect(map).toBeDefined();
+    var grid = new mapnik.Grid(256, 256, {key: 'id'});
+    const r = await new Promise((res, rej) => {
+      map.render(grid, {layer:"l1", fields:['id']}, function(err, grid) {
+          if (err) throw err;
+          console.log(grid);
+          fs.writeFileSync('/tmp/test/points5.json', JSON.stringify(grid.encodeSync({resolution: 1, features: true})));
+        res();
+      });
+    });
+    var im = new mapnik.Image(256, 256);
+    const r2 = await new Promise((res, rej) => {
+      map.render(im, function(err, im) {
+        if(err) throw err;
+        im.encode('png', function(err,buffer) {
+          if (err) throw err;
+          fs.writeFile('/tmp/test/points5.png',buffer, function(err) {
+            if (err) throw err;
+            console.log('saved map image to map.png');
+            res();
+          });
+        });
+      });
+    });
+  });
 
 });
