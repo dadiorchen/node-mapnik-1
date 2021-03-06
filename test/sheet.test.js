@@ -118,8 +118,8 @@ describe("sheet", () => {
   });
 
   it.only("tile server", async () => {
-    const res = await supertest(app).get("/1/1/1.png");
+    const res = await supertest(app).get("/0/0/0.png");
     expect(res.statusCode).toBe(200);
-  });
+  }, 1000*60);
 
 });

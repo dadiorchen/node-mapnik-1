@@ -12,7 +12,7 @@
 
 <Style name="style" opacity=".5" >
     <Rule>
-        <PolygonSymbolizer fill="white" clip="false"/>
+        <PolygonSymbolizer fill="black" clip="false"/>
     </Rule>
 </Style>
 

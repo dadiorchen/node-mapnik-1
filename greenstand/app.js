@@ -11,8 +11,13 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     const define = path.join(__dirname, '../test/postgis.xml');
+//    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
+      if(err){
+        console.error("e:", err);
+        throw "failed";
+      }
 //      if (options.bufferSize) {
 //        obj.bufferSize = options.bufferSize;
 //      }
@@ -22,9 +27,21 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   console.log("map:", map);
   console.log("x,y,z:", x,y,z);
   // bbox for x,y,z
-  var bbox = mercator.xyz_to_envelope(x, y, z, false);
+  const bbox = mercator.xyz_to_envelope(//x, y, z, false);
+          parseInt(x),
+          parseInt(y),
+          parseInt(z), false);
+  console.log("bbox:", bbox);
+  //map.zoomAll();
   map.extent = bbox;
-  var im = new mapnik.Image(256, 256);
+        console.log("map:", map);
+        console.log("map extent:", map.extent);
+        console.log("map.zoomAll:", map.zoomAll);
+        console.log("map.zoomToBox:", map.zoomToBox);
+        console.log("map.load:", map.load);
+        console.log("map.sacle:", map.scale());
+        console.log("map.scaleDenominator:", map.scaleDenominator());
+  const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
     map.render(im, function(err, im) {
       if(err) throw err;
