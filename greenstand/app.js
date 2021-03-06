@@ -1,5 +1,6 @@
 const express = require("express");
 const mapnik = require("../lib/mapnik");
+const path = require("path");
 
 const app = express();
 app.get("/:z/:x/:y.png", async (req, res) => {
@@ -9,7 +10,9 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    mapInstance.load("./test/stylesheet.xml", {strict: true},function(err,_map) {
+    const define = path.join(__dirname, '../test/postgis.xml');
+    console.log("path:", define);
+    mapInstance.load(define, {strict: true},function(err,_map) {
 //      if (options.bufferSize) {
 //        obj.bufferSize = options.bufferSize;
 //      }
