@@ -38,13 +38,13 @@
     <Datasource>
        <Parameter name="srid"><![CDATA[4326]]></Parameter>
        <Parameter name="user"><![CDATA[postgres]]></Parameter>
-       <Parameter name="host"><![CDATA[172.17.0.7]]></Parameter>
+       <Parameter name="host"><![CDATA[172.17.0.4]]></Parameter>
        <Parameter name="port"><![CDATA[5432]]></Parameter>
        <Parameter name="password"><![CDATA[greenstand]]></Parameter>
        <Parameter name="type"><![CDATA[postgis]]></Parameter>
        <Parameter name="extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
        <Parameter name="max_size"><![CDATA[10]]></Parameter>
-       <Parameter name="table"><![CDATA[(SELECT * FROM trees2) as cdbq]]></Parameter>
+       <Parameter name="table"><![CDATA[(SELECT * FROM trees3) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
     </Datasource>
