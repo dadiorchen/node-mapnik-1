@@ -10,6 +10,7 @@
   <Parameter name="interactivity_fields">id</Parameter>
 </Parameters>
 
+<!--
 <Style name="style" opacity=".5" >
     <Rule>
         <PolygonSymbolizer fill="black" clip="false"/>
@@ -24,6 +25,7 @@
         <Parameter name="type">shape</Parameter>
     </Datasource>
 </Layer>
+-->
 
 <Style name="layer0" filter-mode="first" >
   <Rule>
@@ -44,7 +46,7 @@
        <Parameter name="type"><![CDATA[postgis]]></Parameter>
        <Parameter name="extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
        <Parameter name="max_size"><![CDATA[10]]></Parameter>
-       <Parameter name="table"><![CDATA[(SELECT * FROM trees3) as cdbq]]></Parameter>
+       <Parameter name="table"><![CDATA[(SELECT * FROM trees4) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
     </Datasource>
