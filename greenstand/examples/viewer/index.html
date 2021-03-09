@@ -47,8 +47,27 @@
     }
   });
   console.warn("utf:", utfGridLayer);
+  let marker;
+  const myIcon = L.icon({
+    iconUrl: './images/pin_29px_highlight.png',
+    iconSize: [32, 32],
+//    iconSize: [38, 95],
+//    iconAnchor: [22, 94],
+//    popupAnchor: [-3, -76],
+//    shadowUrl: 'my-icon-shadow.png',
+//    shadowSize: [68, 95],
+//    shadowAnchor: [22, 94]
+  });
   utfGridLayer.on('mouseover', function (e) {
-    console.log("e:", e);
+    console.log("over e:", e);
+    marker = L.marker([e.data.lat, e.data.lon],{
+      icon: myIcon,
+    });
+    marker.addTo(mymap);
+  });
+  utfGridLayer.on('mouseout', function (e) {
+    console.log("out e:", e);
+    mymap.removeLayer(marker);
   });
   utfGridLayer.addTo(mymap);
 //  mymap.addLayer(utfGridLayer);
