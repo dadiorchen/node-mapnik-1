@@ -7,5 +7,5 @@ RUN sudo apt-get install zlib1g-dev
 #TODO We should build the tile2 image from node 12 alpine
 RUN curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
-RUN make release
+RUN make release_base
 CMD [ "npm", "start" ]
