@@ -92,20 +92,14 @@ jobs:
         echo "::set-output name=image-tag-name::$value"
     - name: Install kustomize
       run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-    - name: Copy kustomize.yml
-      run: cp deployment/kustomize/kustomization.yaml deployment/kustomization.yaml
     - name: Run kustomize
-      run: (cd deployment && ../kustomize edit set image greenstand/treetracker-map-tile-server:${{ steps.image-tag-name.outputs.image-tag-name }} )
+      run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-map-tile-server:${{ steps.image-tag-name.outputs.image-tag-name }} )
     - name: Install doctl for kubernetes
       uses: digitalocean/action-doctl@v2
       with:
         token: ${{ secrets.DIGITALOCEAN_TOKEN }}
     - name: Save DigitalOcean kubeconfig
       run: doctl kubernetes cluster kubeconfig save ${{ secrets.DEV_CLUSTER_NAME }}
-    - name: Delete completed migration jobs prior to deployment
-      run: kubectl -n map-tile-server delete job --ignore-not-found=true  wallet-db-migration-job
     - name: Update kubernetes resources
-      run: kubectl -n map-tile-server apply --wait -k ./deployment/
-#    - name: Attempt to wait for migration job to complete
-#      run: kubectl wait --for=condition=complete --timeout=45s job/wallet-db-migration-job
+      run: kustomize build deployment/overlays/development | kubectl apply -n tile-server --wait -f -
 
