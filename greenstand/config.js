@@ -17,12 +17,13 @@ function config(){
   //       <Parameter name="max_size"><![CDATA[10]]></Parameter>
   //       <Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
   //       <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
-
-  const db_user = process.env.DB_USER
-  const db_port = process.env.DB_PORT;
-  const db_password = process.env.DB_PASSWORD;
-  const db_database = process.env.DB_DATABASE;
-  const db_host = process.env.DB_HOST
+  const db_url = process.env.DB_URL;
+  const match = db_url.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(\w+)/);
+  const db_user = match[1];
+  const db_port = match[4];
+  const db_password = match[2];
+  const db_database = match[5];
+  const db_host = match[3];
   function config(str){
     str = str.replace(/postgres/, db_user);
     str = str.replace(/172.17.0.2/, db_host);
