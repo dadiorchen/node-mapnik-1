@@ -5,9 +5,8 @@ on:
   workflow_dispatch:
     inputs:
       git-tag:
-        description: "Branch/hash/tag"
+        description: "image tag"
         required: true
-        default: 'master'
 
 env: 
   project-directory: ./
