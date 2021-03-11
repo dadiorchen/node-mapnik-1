@@ -1,8 +1,8 @@
-FROM node:12.19.0-alpine
+FROM dadiorchen/tile2:first
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm ci --silent
 COPY . ./
+RUN sudo apt install build-essential 
+RUN sudo apt-get install zlib1g-dev
+RUN make release_base
 CMD [ "node", "." ]
