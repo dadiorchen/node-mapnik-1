@@ -1,3 +1,11 @@
+## [4.7.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.0...v4.7.1) (2021-03-11)
+
+
+### Bug Fixes
+
+* fix name of repository ([e8a0fbd](https://github.com/Greenstand/node-mapnik-1/commit/e8a0fbd273b26ed3963b419ec782161f4fc3f28d))
+* update description and default for image tag [skip ci] ([2098c0a](https://github.com/Greenstand/node-mapnik-1/commit/2098c0ad250f5cf9a1c33dae2d8131673da7e686))
+
 # [4.7.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.1...v4.7.0) (2021-03-11)
 
 
