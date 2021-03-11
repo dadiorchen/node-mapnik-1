@@ -27,8 +27,12 @@ jobs:
     - run: semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: npm clean install
-      run: npm ci
+    - name: install c++ compiler
+      run: sudo apt install build-essential
+    - name: install zlib
+      run: sudo apt-get install zlib1g-dev
+    - name: build for mapnik
+      run: make release
       working-directory: ${{ env.project-directory }}
     - name: get-npm-version
       id: package-version
