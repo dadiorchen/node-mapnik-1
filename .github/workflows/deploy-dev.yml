@@ -1,0 +1,41 @@
+
+name: Deploy to Test Env
+
+on:
+  workflow_dispatch:
+    inputs:
+      git-tag:
+        description: "Branch/hash/tag"
+        required: true
+        default: 'master'
+
+env: 
+  project-directory: ./
+
+jobs:
+  deploy-test:
+    name: Deploy latest to test environment, requires approval
+    runs-on: ubuntu-latest
+    if: |
+      github.repository == 'Greenstand/treetracker-node-mapnik-1'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.git-tag }}
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+        with:
+          path: ./
+      - name: Install kustomize
+        run: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+      - name: Run kustomize
+        run: (cd deployment/base && ../../kustomize edit set image greenstand/treetracker-map-tile-server:${{ steps.image-tag-name.outputs.image-tag-name }} )
+      - name: Install doctl for kubernetes
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+      - name: Save DigitalOcean kubeconfig
+        run: doctl kubernetes cluster kubeconfig save ${{ secrets.TEST_CLUSTER_NAME }}
+      - name: Update kubernetes resources
+        run: kustomize build deployment/overlays/development | kubectl apply -n tile-server --wait -f -
