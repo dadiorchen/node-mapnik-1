@@ -5,4 +5,4 @@ COPY . ./
 RUN sudo apt install build-essential 
 RUN sudo apt-get install zlib1g-dev
 RUN make release_base
-CMD [ "node", "." ]
+CMD [ "npm", "start" ]
