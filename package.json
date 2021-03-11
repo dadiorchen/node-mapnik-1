@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mapnik/node-mapnik.git"
+    "url": "git://github.com/Greenstand/node-mapnik-1.git"
   },
   "contributors": [
     "Konstantin Käfer",
