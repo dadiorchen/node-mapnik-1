@@ -1,7 +1,6 @@
 {
-  "name": "mapnik",
+  "name": "treetracker-map-tile-server",
   "description": "Tile rendering library for node",
-  "url": "http://github.com/mapnik/node-mapnik",
   "homepage": "http://mapnik.org",
   "author": "Dane Springmeyer <dane@mapbox.com> (mapnik.org)",
   "version": "4.5.6",
