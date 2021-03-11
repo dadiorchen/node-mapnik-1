@@ -3,6 +3,9 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
+const config = require("./config");
+
+config();
 
 const app = express();
 app.use(cors());
@@ -13,7 +16,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.xml');
+    const define = path.join(__dirname, '../test/postgis.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
