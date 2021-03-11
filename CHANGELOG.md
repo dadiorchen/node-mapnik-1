@@ -1,3 +1,16 @@
+# [4.7.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.1...v4.7.0) (2021-03-11)
+
+
+### Bug Fixes
+
+* set up mapping for DB_URL env var ([4dd9100](https://github.com/Greenstand/node-mapnik-1/commit/4dd9100b4985a61622f00790889ed5512810f532))
+
+
+### Features
+
+* add env var ([f19ba0e](https://github.com/Greenstand/node-mapnik-1/commit/f19ba0e84b6907f36368528a480baf586644dc8e))
+* switch to single fully connection string ([166b530](https://github.com/Greenstand/node-mapnik-1/commit/166b530220c6bd12d869cd423a5000662bbc3950))
+
 ## [4.6.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.0...v4.6.1) (2021-03-11)
 
 
