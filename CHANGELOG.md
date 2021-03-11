@@ -1,3 +1,11 @@
+## [4.6.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.0...v4.6.1) (2021-03-11)
+
+
+### Bug Fixes
+
+* add database connection sealed secret ([37d6c19](https://github.com/Greenstand/node-mapnik-1/commit/37d6c1943e82115a68e2c340df7454f62b3833f8))
+* update deployment ([7c9279d](https://github.com/Greenstand/node-mapnik-1/commit/7c9279d14492986a6e65b6b7dee96d35e1218b1f))
+
 # [4.6.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.5.6...v4.6.0) (2021-03-11)
 
 
