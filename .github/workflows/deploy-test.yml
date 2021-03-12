@@ -5,9 +5,8 @@ on:
   workflow_dispatch:
     inputs:
       git-tag:
-        description: "Branch/hash/tag"
+        description: "tag"
         required: true
-        default: 'master'
 
 env: 
   project-directory: ./
@@ -17,7 +16,7 @@ jobs:
     name: Deploy latest to test environment, requires approval
     runs-on: ubuntu-latest
     if: |
-      github.repository == 'Greenstand/treetracker-wallet-api'
+      github.repository == 'Greenstand/node-mapnik-1'
     steps:
       - uses: actions/checkout@v2
         with:
