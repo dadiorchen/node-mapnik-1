@@ -3,6 +3,11 @@ const fs = require("fs");
 const config = require("./config");
 
 describe("", () => {
+
+  beforeEach(() => {
+    process.env.DB_URL = "postgresql://newuser:pppp@192.168:2222/namename?ssl=true";
+  });
+
   it("config", async () => {
     config();
   const newDefine = path.join(__dirname, '../test/postgis.prod.xml');
