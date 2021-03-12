@@ -1,3 +1,10 @@
+## [4.7.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.1...v4.7.2) (2021-03-12)
+
+
+### Bug Fixes
+
+* correct mapping ([69abcc4](https://github.com/Greenstand/node-mapnik-1/commit/69abcc4d2564b654069e3ef27bd601fbe2a70056))
+
 ## [4.7.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.0...v4.7.1) (2021-03-11)
 
 
