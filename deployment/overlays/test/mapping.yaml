@@ -1,11 +1,12 @@
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
-  name: treetracker-admin-api
+  name: treetracker-tile-server
 spec:
   cors:
-    origins: https://test.admin.treetracker.org
-    methods: GET, POST, PATCH, PUT, OPTIONS
+    origins:
+      - https://test-k8s.treetracker.org
+    methods: GET
     headers:
       - Content-Type
       - Authorization
