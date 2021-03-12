@@ -47,6 +47,7 @@ function configFreetown(){
   let contentConfig = replace(content);
   contentConfig = contentConfig.replace("(SELECT * FROM trees) as cdbq", 
     `
+    (
     /* sql case2 */
     SELECT /* DISTINCT ON(trees.id) */
     'point' AS type,
@@ -78,6 +79,7 @@ function configFreetown(){
     ON trees.planter_id = planter_ids.id
     ) t1
     )
+    ) as cdbq
     `);
   fs.writeFileSync(newDefine,contentConfig);
 }
