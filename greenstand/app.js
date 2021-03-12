@@ -134,6 +134,13 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   res.json(json);
 });
 
+//viewer
+const viewer = path.join(__dirname, './examples/viewer');
+app.get('/viewer', function(req, res) {
+    res.sendFile(path.join(viewer, 'index.html'));
+});
+app.use('/viewer', express.static(viewer));
+
 app.use("*", (_, res) => {
   res.status(200).send("Welcome to Greenstand tile server");
 });
