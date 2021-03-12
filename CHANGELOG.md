@@ -1,3 +1,10 @@
+## [4.7.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.3...v4.7.4) (2021-03-12)
+
+
+### Bug Fixes
+
+* scale up ([9873597](https://github.com/Greenstand/node-mapnik-1/commit/9873597a473d675551f204a59e5844fe072fe088))
+
 ## [4.7.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.2...v4.7.3) (2021-03-12)
 
 
