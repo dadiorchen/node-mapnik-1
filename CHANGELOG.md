@@ -1,3 +1,10 @@
+## [4.7.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.2...v4.7.3) (2021-03-12)
+
+
+### Bug Fixes
+
+* trigger build ([96a4569](https://github.com/Greenstand/node-mapnik-1/commit/96a4569f365ca55ee421231ddb42d515d9073829))
+
 ## [4.7.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.1...v4.7.2) (2021-03-12)
 
 
