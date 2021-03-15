@@ -5,6 +5,7 @@ const log = require("loglevel");
 const cors = require("cors");
 const {config, configFreetown} = require("./config");
 const fs = require("fs");
+const {setSql} = require("./utils");
 
 config();
 configFreetown();
@@ -22,6 +23,23 @@ app.get("/:z/:x/:y.png", async (req, res) => {
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     let xmlString = fs.readFileSync(define).toString();
+    xmlString = xmlString.replace(
+      "../greenstand/pin_29px.png",
+      "./greenstand/images/cluster_46px.png"
+    );
+    xmlString = setSql(
+      xmlString,
+      `
+      SELECT 'cluster' AS type,
+      region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
+      type_id as region_type,
+      count(tree_region.id)
+      FROM active_tree_region tree_region
+      WHERE zoom_level = ${z}
+      GROUP BY region_id, centroid, type_id
+      `
+    );
+    //<Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
     xmlString = xmlString.replace(
       "../greenstand/pin_29px.png",
       "./greenstand/pin_29px.png"
