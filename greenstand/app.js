@@ -4,6 +4,7 @@ const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
 const {config, configFreetown} = require("./config");
+const fs = require("fs");
 
 config();
 configFreetown();
@@ -20,7 +21,13 @@ app.get("/:z/:x/:y.png", async (req, res) => {
     const define = path.join(__dirname, '../test/postgis.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    mapInstance.load(define, {strict: true},function(err,_map) {
+    let xmlString = fs.readFileSync(define).toString();
+    xmlString = xmlString.replace(
+      "../greenstand/pin_29px.png",
+      "./greenstand/pin_29px.png"
+    );
+
+    mapInstance.fromString(xmlString, {strict: true},function(err,_map) {
       if(err){
         console.error("e:", err);
         throw "failed";
