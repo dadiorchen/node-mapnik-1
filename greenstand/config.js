@@ -84,4 +84,4 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-module.exports = {config, configFreetown};
+module.exports = {config, configFreetown, replace};

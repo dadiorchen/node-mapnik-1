@@ -14,11 +14,13 @@ describe("font", () => {
       return val;
     }
 
-    const font = "DejaVu Serif Condensed Bold Italic";
+//    const font = "DejaVu Serif Condensed Bold Italic";
+    const font = "DejaVu Serif Condensed Bold";
     var map = new mapnik.Map(4, 4);
     map.registerFonts('./test/data/map-a/', {recurse:true});
+    map.registerFonts('./test/data/map-b/', {recurse:true});
     log.warn("font:", map.fonts());
-    expect(map.fonts().indexOf(font)).toBe(0);
+    expect(map.fonts().indexOf(font)).toBeGreaterThan(-1);
     const base = path.resolve(path.join(__dirname,'../test/data','map-a'));
     log.warn("base:", base);
     map.fromStringSync(xmlWithFont(font), {
@@ -86,7 +88,7 @@ describe("font", () => {
             />
             -->
             <TextSymbolizer
-                  face-name="${font}" size="12"
+              face-name="${font}" fill="white" size="24"
             >
               [sss]
           </TextSymbolizer>

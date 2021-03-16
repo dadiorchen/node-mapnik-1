@@ -3,9 +3,10 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
-const {config, configFreetown} = require("./config");
+const {config, configFreetown, replace} = require("./config");
 const fs = require("fs");
 const {setSql} = require("./utils");
+const {xml} = require("./xml");
 
 config();
 configFreetown();
@@ -19,33 +20,17 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
+    mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
     const define = path.join(__dirname, '../test/postgis.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    let xmlString = fs.readFileSync(define).toString();
-    xmlString = xmlString.replace(
-      "../greenstand/pin_29px.png",
-      "./greenstand/images/cluster_46px.png"
-    );
-    xmlString = setSql(
-      xmlString,
-      `
-      SELECT 'cluster' AS type,
-      region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
-      type_id as region_type,
-      count(tree_region.id)
-      FROM active_tree_region tree_region
-      WHERE zoom_level = ${z}
-      GROUP BY region_id, centroid, type_id
-      `
-    );
+    let xmlString = replace(xml);
     //<Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
-    xmlString = xmlString.replace(
-      "../greenstand/pin_29px.png",
-      "./greenstand/pin_29px.png"
-    );
 
-    mapInstance.fromString(xmlString, {strict: true},function(err,_map) {
+    mapInstance.fromString(xmlString, {
+      strict: true,
+      base: __dirname,
+    },function(err,_map) {
       if(err){
         console.error("e:", err);
         throw "failed";
