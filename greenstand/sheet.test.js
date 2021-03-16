@@ -1,4 +1,4 @@
-const mapnik = require('mapnik');
+const mapnik = require('../');
 const fs = require('fs');
 const log = require("loglevel");
 const express = require("express");
