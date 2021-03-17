@@ -1,3 +1,18 @@
+# [4.8.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.4...v4.8.0) (2021-03-17)
+
+
+### Bug Fixes
+
+* broken tests ([0a2ab96](https://github.com/Greenstand/node-mapnik-1/commit/0a2ab9658deeb79942044b08231c61fdf0290a3a))
+
+
+### Features
+
+* add example viewer, usage: http://deployedhost/viewer ([ac6c0ac](https://github.com/Greenstand/node-mapnik-1/commit/ac6c0acd8d16fd2ff2c8cce833eb701554db4ad5))
+* decrese buffer-size to improve performace ([6ec0168](https://github.com/Greenstand/node-mapnik-1/commit/6ec0168f1e82b8b6382dd8797cedb0aa84cd1df9))
+* freetown config ([f8762c2](https://github.com/Greenstand/node-mapnik-1/commit/f8762c230c8373d8e20980412bfd812625a279a3))
+* freetown tile ([ba725f9](https://github.com/Greenstand/node-mapnik-1/commit/ba725f9395a720226c995ae53dd3a5542a2a5cf1))
+
 ## [4.7.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.3...v4.7.4) (2021-03-12)
 
 
