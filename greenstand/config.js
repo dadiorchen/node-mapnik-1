@@ -1,13 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-
-function config(){
-  const define = path.join(__dirname, '../test/postgis.xml');
-  const content = fs.readFileSync(define).toString();
-//  expect(content).toMatch(/172.17/);
-  const newDefine = path.join(__dirname, '../test/postgis.prod.xml');
-
+function replace(content){
   //       <Parameter name="user"><![CDATA[postgres]]></Parameter>
   //       <Parameter name="host"><![CDATA[172.17.0.2]]></Parameter>
   //       <Parameter name="port"><![CDATA[5432]]></Parameter>
@@ -33,8 +27,61 @@ function config(){
     return str;
   }
   const contentConfig = config(content);
+  return contentConfig;
+}
 
+function config(){
+  const define = path.join(__dirname, '../test/postgis.xml');
+  const content = fs.readFileSync(define).toString();
+  const newDefine = path.join(__dirname, '../test/postgis.prod.xml');
+
+  const contentConfig = replace(content);
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-module.exports = config;
+function configFreetown(){
+  const define = path.join(__dirname, '../test/postgis.xml');
+  const content = fs.readFileSync(define).toString();
+  const newDefine = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+
+  let contentConfig = replace(content);
+  contentConfig = contentConfig.replace("(SELECT * FROM trees) as cdbq", 
+    `
+    (
+    /* sql case2 */
+    SELECT /* DISTINCT ON(trees.id) */
+    'point' AS type,
+    trees.id, trees.lat, trees.lon, trees.estimated_geometric_location
+    FROM trees
+    WHERE active = true
+    AND trees.id IN(
+    select distinct * from (
+    SELECT trees.id as id from trees
+    INNER JOIN (
+    SELECT id FROM planter
+    JOIN (
+    SELECT entity_id FROM getEntityRelationshipChildren(
+    (SELECT id FROM entity WHERE map_name = 'freetown')
+    )
+    ) org ON planter.organization_id = org.entity_id
+    ) planter_ids
+    ON trees.planter_id = planter_ids.id
+    union all
+    SELECT trees.id as id from trees
+    INNER JOIN (
+    SELECT id FROM planter
+    JOIN (
+    SELECT entity_id FROM getEntityRelationshipChildren(
+    (SELECT id FROM entity WHERE map_name = 'freetown')
+    )
+    ) org ON planter.organization_id = org.entity_id
+    ) planter_ids
+    ON trees.planter_id = planter_ids.id
+    ) t1
+    )
+    ) as cdbq
+    `);
+  fs.writeFileSync(newDefine,contentConfig);
+}
+
+module.exports = {config, configFreetown};
