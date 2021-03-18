@@ -1,3 +1,10 @@
+## [4.8.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.1...v4.8.2) (2021-03-18)
+
+
+### Bug Fixes
+
+* viewer path ([747a5dd](https://github.com/Greenstand/node-mapnik-1/commit/747a5ddf17ee13da6ff58b8c6fd8660760100920))
+
 ## [4.8.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.0...v4.8.1) (2021-03-18)
 
 
