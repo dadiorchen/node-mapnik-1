@@ -1,3 +1,10 @@
+## [4.8.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.0...v4.8.1) (2021-03-18)
+
+
+### Bug Fixes
+
+* zoom level problem ([9fb69c9](https://github.com/Greenstand/node-mapnik-1/commit/9fb69c960fd43529f5dfa10888b3dc535c81a259))
+
 # [4.8.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.4...v4.8.0) (2021-03-17)
 
 
