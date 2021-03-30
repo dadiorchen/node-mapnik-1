@@ -62,15 +62,7 @@ const xml =`
        <Parameter name="type"><![CDATA[postgis]]></Parameter>
        <Parameter name="extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
        <Parameter name="max_size"><![CDATA[10]]></Parameter>
-       <Parameter name="table"><![CDATA[(
-          SELECT 'cluster' AS type,
-          region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
-          type_id as region_type,
-          count(tree_region.id)
-          FROM active_tree_region tree_region
-          WHERE zoom_level = 2
-          GROUP BY region_id, centroid, type_id
-       ) as cdbq]]></Parameter>
+       <Parameter name="table"><![CDATA[(select * from trees) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
     </Datasource>

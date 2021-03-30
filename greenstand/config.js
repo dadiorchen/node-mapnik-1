@@ -1,6 +1,10 @@
 const path = require("path");
 const fs = require("fs");
+const {xml} = require("./xml");
 
+/*
+ * setup the DB connection
+ */
 function replace(content){
   //       <Parameter name="user"><![CDATA[postgres]]></Parameter>
   //       <Parameter name="host"><![CDATA[172.17.0.2]]></Parameter>
@@ -84,4 +88,26 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-module.exports = {config, configFreetown, replace};
+function getXMLString(zoomLevel){
+  let xmlString = replace(xml);
+  xmlString = xmlString.replace(
+    "select * from trees",
+`
+          SELECT 'cluster' AS type,
+          region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
+          type_id as region_type,
+          count(tree_region.id)
+          FROM active_tree_region tree_region
+          WHERE zoom_level = 2
+          GROUP BY region_id, centroid, type_id
+`
+  );
+  return xmlString;
+}
+
+module.exports = {
+  config, 
+  configFreetown, 
+  replace,
+  getXMLString,
+};

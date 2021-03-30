@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
-const {config, configFreetown} = require("./config");
+const {config, configFreetown, getXMLString} = require("./config");
+const xml = require("./xml");
 
 describe("", () => {
 
@@ -23,7 +24,7 @@ describe("", () => {
 //    mapInstance.load(define, {strict: true},function(err,_map) {
   });
 
-  it.only("config freetown", async () => {
+  it("config freetown", async () => {
     configFreetown();
   const newDefine = path.join(__dirname, '../test/postgis.freetown.prod.xml');
     const newContent = fs.readFileSync(newDefine).toString();
@@ -39,3 +40,13 @@ describe("", () => {
 //    mapInstance.load(define, {strict: true},function(err,_map) {
   });
 });
+
+describe.only("getXMLString", () => {
+
+  it("basic", async () => {
+    const xmlString = getXMLString();
+    expect(xmlString).toMatch(/FROM active_tree_region tree_region/s);
+  });
+
+});
+

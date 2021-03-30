@@ -3,16 +3,16 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
-const {config, configFreetown, replace} = require("./config");
+const {config, configFreetown, getXMLString} = require("./config");
 const fs = require("fs");
 const {setSql} = require("./utils");
-const {xml} = require("./xml");
 
 config();
 configFreetown();
 
 const app = express();
 app.use(cors());
+
 app.get("/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
@@ -24,8 +24,9 @@ app.get("/:z/:x/:y.png", async (req, res) => {
     const define = path.join(__dirname, '../test/postgis.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    let xmlString = replace(xml);
     //<Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
+    
+    const xmlString = getXMLString(z);
 
     mapInstance.fromString(xmlString, {
       strict: true,
