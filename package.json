@@ -43,7 +43,8 @@
     "jest": "^26.6.3",
     "loglevel": "^1.7.1",
     "mapnik-vector-tile": "3.0.1",
-    "node-addon-api": "~3.1.x"
+    "node-addon-api": "~3.1.x",
+    "xml2js": "^0.4.23"
   },
   "bin": {
     "mapnik-index.js": "bin/mapnik-index.js",

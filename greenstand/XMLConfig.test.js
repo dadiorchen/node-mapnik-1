@@ -6,7 +6,8 @@ describe("XML config", () => {
 
   it("change sql", async () => {
     const xmlConfig = new XMLConfig(); 
-    xmlConfig.select(`select * from tree2`);
-    expect(xmlConfig.toString()).toMatch(/select.*tree2/is);
+    await xmlConfig.select(`select * from tree2`);
+    const string = await xmlConfig.toString();
+    expect(string).toMatch(/select.*tree2/is);
   });
 });

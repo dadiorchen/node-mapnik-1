@@ -1,3 +1,4 @@
+const xml2js = require("xml2js")
 
 const xml =`
 <?xml version="1.0" encoding="utf-8"?>
@@ -78,12 +79,18 @@ class XMLConfig{
     this.xml = xml;
   }
 
-  select(sentence){
+  async select(sentence){
+    const obj = await xml2js.parseStringPromise(this.xml);
+    console.dir(obj);
+    this.obj = obj;
     this.xml = this.xml.replace("(SELECT * FROM trees) as cdbq", sentence);
   }
 
-  toString(){
-    return this.xml;
+  async toString(){
+    //return this.xml;
+    const builder = new xml2js.Builder();
+    const xml = builder.buildObject(this.obj);
+    return xml;
   }
 }
 
