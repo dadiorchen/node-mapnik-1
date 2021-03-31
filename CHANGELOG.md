@@ -1,3 +1,11 @@
+## [4.8.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.2...v4.8.3) (2021-03-31)
+
+
+### Bug Fixes
+
+* broken viewer ([1bb72a0](https://github.com/Greenstand/node-mapnik-1/commit/1bb72a0c66868161ba1b1a6ce731a41e16c577f8))
+* bug, should filter trees by active = true ([d9e01ff](https://github.com/Greenstand/node-mapnik-1/commit/d9e01ffc96f7f7ad5085e021d023bf8bfe571968))
+
 ## [4.8.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.1...v4.8.2) (2021-03-18)
 
 
