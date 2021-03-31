@@ -1,3 +1,10 @@
+## [4.8.7](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.6...v4.8.7) (2021-03-31)
+
+
+### Bug Fixes
+
+* path for image ([c9075dd](https://github.com/Greenstand/node-mapnik-1/commit/c9075dd1374f7465ada53261758ec3a34658d492))
+
 ## [4.8.6](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.5...v4.8.6) (2021-03-31)
 
 
