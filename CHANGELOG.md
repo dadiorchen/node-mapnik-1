@@ -1,3 +1,10 @@
+## [4.8.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.3...v4.8.4) (2021-03-31)
+
+
+### Bug Fixes
+
+* use the folder layers to store xmls ([d9e18c5](https://github.com/Greenstand/node-mapnik-1/commit/d9e18c52ff7d797eddff16fba68559ff3b1ffc34))
+
 ## [4.8.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.2...v4.8.3) (2021-03-31)
 
 
