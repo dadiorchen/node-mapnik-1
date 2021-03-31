@@ -1,6 +1,8 @@
 const path = require("path");
 const fs = require("fs");
 const {xml} = require("./xml");
+const Map = require("./Map");
+const log = require("loglevel");
 
 /*
  * setup the DB connection
@@ -88,19 +90,27 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-function getXMLString(zoomLevel){
+async function getXMLString(zoomLevel){
   let xmlString = replace(xml);
+  const map = new Map();
+  await map.init({
+    zoom_level: zoomLevel,
+  });
+  const sql = await map.getQuery();
+  log.warn("sql:", sql);
+
   xmlString = xmlString.replace(
     "select * from trees",
-`
-          SELECT 'cluster' AS type,
-          region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
-          type_id as region_type,
-          count(tree_region.id)
-          FROM active_tree_region tree_region
-          WHERE zoom_level = 2
-          GROUP BY region_id, centroid, type_id
-`
+    sql,
+//`
+//          SELECT 'cluster' AS type,
+//          region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
+//          type_id as region_type,
+//          count(tree_region.id)
+//          FROM active_tree_region tree_region
+//          WHERE zoom_level = 2
+//          GROUP BY region_id, centroid, type_id
+//`
   );
   return xmlString;
 }

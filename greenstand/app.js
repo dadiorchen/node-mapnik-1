@@ -18,15 +18,12 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
   mapnik.register_default_input_plugins();
-  const map = await new Promise((res, rej) => {
+  const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
     const define = path.join(__dirname, '../test/postgis.prod.xml');
-//    const define = path.join(__dirname, 'stylesheet.xml');
-    console.log("path:", define);
-    //<Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
     
-    const xmlString = getXMLString(z);
+    const xmlString = await getXMLString(z);
 
     mapInstance.fromString(xmlString, {
       strict: true,
@@ -84,12 +81,16 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
   mapnik.register_default_input_plugins();
-  const map = await new Promise((res, rej) => {
+  const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     const define = path.join(__dirname, '../test/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    mapInstance.load(define, {strict: true},function(err,_map) {
+    const xmlString = await getXMLString(z);
+    mapInstance.fromString(xmlString, {
+      strict: true,
+      base: __dirname,
+    },function(err,_map) {
       if(err){
         console.error("e:", err);
         throw "failed";

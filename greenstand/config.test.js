@@ -44,7 +44,7 @@ describe("", () => {
 describe.only("getXMLString", () => {
 
   it("basic", async () => {
-    const xmlString = getXMLString();
+    const xmlString = await getXMLString(2);
     expect(xmlString).toMatch(/FROM active_tree_region tree_region/s);
   });
 
