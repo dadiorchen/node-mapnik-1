@@ -1,3 +1,10 @@
+## [4.8.6](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.5...v4.8.6) (2021-03-31)
+
+
+### Bug Fixes
+
+* move pin png ([7845653](https://github.com/Greenstand/node-mapnik-1/commit/7845653d13f809205b9813f4aceea1ba0ccaa607))
+
 ## [4.8.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.4...v4.8.5) (2021-03-31)
 
 
