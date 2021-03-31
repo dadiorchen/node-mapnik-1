@@ -1,3 +1,10 @@
+## [4.8.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.4...v4.8.5) (2021-03-31)
+
+
+### Bug Fixes
+
+* increase size of buffer ([add9169](https://github.com/Greenstand/node-mapnik-1/commit/add9169347635d1073f7c698ff92c4b6d443ee22))
+
 ## [4.8.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.3...v4.8.4) (2021-03-31)
 
 
