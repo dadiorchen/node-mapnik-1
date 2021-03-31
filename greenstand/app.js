@@ -27,7 +27,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -85,7 +85,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -153,7 +153,7 @@ app.get("/freetown/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.freetown.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -211,7 +211,7 @@ app.get("/freetown/:z/:x/:y.grid.json", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.freetown.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -283,7 +283,7 @@ app.use("*", (_, res) => {
 //
 //  var map = new mapnik.Map(256*5, 256*5);
 //  const buffer = await new Promise((resolve, _rej) => {
-//    map.load('./test/postgis.xml', function(err,map) {
+//    map.load('./layers/postgis.xml', function(err,map) {
 //      if (err) throw err;
 //      //        expect(map).toHaveProperty("srs", "+init=epsg:3857");
 //      map.zoomAll();

@@ -31,18 +31,18 @@ function replace(content){
 }
 
 function config(){
-  const define = path.join(__dirname, '../test/postgis.xml');
+  const define = path.join(__dirname, './layers/postgis.xml');
   const content = fs.readFileSync(define).toString();
-  const newDefine = path.join(__dirname, '../test/postgis.prod.xml');
+  const newDefine = path.join(__dirname, './layers/postgis.prod.xml');
 
   const contentConfig = replace(content);
   fs.writeFileSync(newDefine,contentConfig);
 }
 
 function configFreetown(){
-  const define = path.join(__dirname, '../test/postgis.xml');
+  const define = path.join(__dirname, './layers/postgis.xml');
   const content = fs.readFileSync(define).toString();
-  const newDefine = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+  const newDefine = path.join(__dirname, './layers/postgis.freetown.prod.xml');
 
   let contentConfig = replace(content);
   contentConfig = contentConfig.replace("(SELECT * FROM trees) as cdbq", 
