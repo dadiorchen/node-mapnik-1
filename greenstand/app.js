@@ -56,7 +56,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
         console.log("map.zoomAll:", map.zoomAll);
         console.log("map.zoomToBox:", map.zoomToBox);
         console.log("map.load:", map.load);
-        console.log("map.sacle:", map.scale());
+        console.log("map.scale:", map.scale());
         console.log("map.scaleDenominator:", map.scaleDenominator());
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
@@ -65,11 +65,6 @@ app.get("/:z/:x/:y.png", async (req, res) => {
       im.encode('png', function(err,buffer) {
         if (err) throw err;
         res(buffer);
-//        fs.writeFile('/tmp/test/tile.png',buffer, function(err) {
-//          if (err) throw err;
-//          console.log('saved map image to map.png');
-//          res();
-//        });
       });
     });
   });
