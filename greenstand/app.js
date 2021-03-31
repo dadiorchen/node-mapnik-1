@@ -10,6 +10,16 @@ configFreetown();
 
 const app = express();
 app.use(cors());
+
+//viewer
+const viewer = path.join(__dirname, './examples/viewer');
+//app.get('/viewer', function(req, res) {
+//    res.sendFile(path.join(viewer, 'index.html'));
+//});
+app.use('/viewer', express.static(viewer));
+const images = path.join(__dirname, './examples/viewer/images');
+app.use('/viewer/images', express.static(images));
+
 app.get("/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
@@ -261,16 +271,11 @@ app.get("/freetown/:z/:x/:y.grid.json", async (req, res) => {
   res.json(json);
 });
 
-//viewer
-const viewer = path.join(__dirname, './examples/viewer');
-app.get('/viewer', function(req, res) {
-    res.sendFile(path.join(viewer, 'index.html'));
-});
-app.use('/viewer', express.static(viewer));
 
 app.use("*", (_, res) => {
   res.status(200).send("Welcome to Greenstand tile server");
 });
+
 //app.use(async (_req, res) => {
 //  // register fonts and datasource plugins
 //  mapnik.register_default_fonts();
