@@ -10,23 +10,6 @@
   <Parameter name="interactivity_fields">id</Parameter>
 </Parameters>
 
-<!--
-<Style name="style" opacity=".5" >
-    <Rule>
-        <PolygonSymbolizer fill="black" clip="false"/>
-    </Rule>
-</Style>
-
-<Layer name="world" >
-    <StyleName>style</StyleName>
-    <Datasource>
-        <Parameter name="file">data/world_merc.shp</Parameter>
-        <Parameter name="encoding">iso-8859-1</Parameter>
-        <Parameter name="type">shape</Parameter>
-    </Datasource>
-</Layer>
--->
-
 <Style name="layer0" filter-mode="first" >
   <Rule>
     <PointSymbolizer
@@ -34,6 +17,7 @@
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
+      avoid_edges="false"
       />
     <!--
     <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
