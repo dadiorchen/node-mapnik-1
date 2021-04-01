@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const {xml} = require("./xml");
+const {xml, xmlTree} = require("./xml");
 const Map = require("./Map");
 const log = require("loglevel");
 
@@ -91,10 +91,17 @@ function configFreetown(){
 }
 
 async function getXMLString(zoomLevel){
-  let xmlString = replace(xml);
+  const zoomLevelInt = parseInt(zoomLevel);
+  let xmlTemplate;
+  if(zoomLevelInt > 15){
+    xmlTemplate = xmlTree;
+  }else{
+    xmlTemplate = xml;
+  }
+  let xmlString = replace(xmlTemplate);
   const map = new Map();
   await map.init({
-    zoom_level: zoomLevel,
+    zoom_level: zoomLevelInt,
   });
   const sql = await map.getQuery();
   log.warn("sql:", sql);
