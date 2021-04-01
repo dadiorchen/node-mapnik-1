@@ -20,18 +20,20 @@ class SQLCase4{
   }
 
   getQuery(){
-      const query = {
-        text: `
+      const text = `
           /* case4 */
-          SELECT 'cluster' as type,
-            St_asgeojson(location) centroid, count
+          SELECT 
+          id,
+          'cluster' as type,
+          location estimated_geometric_location,
+          St_asgeojson(location) centroid, 
+          St_asgeojson(location) latlon,
+          count
           FROM clusters
           WHERE zoom_level = 14 
           ${this.getBoundingBoxQuery()}
-        `,
-        values: [],
-      }
-    return query;
+        `;
+    return text;
   }
 }
 

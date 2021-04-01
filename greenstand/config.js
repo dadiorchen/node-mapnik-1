@@ -102,15 +102,6 @@ async function getXMLString(zoomLevel){
   xmlString = xmlString.replace(
     "select * from trees",
     sql,
-//`
-//          SELECT 'cluster' AS type,
-//          region_id id, ST_ASGeoJson(centroid) centroid_json, centroid AS estimated_geometric_location,
-//          type_id as region_type,
-//          count(tree_region.id)
-//          FROM active_tree_region tree_region
-//          WHERE zoom_level = 2
-//          GROUP BY region_id, centroid, type_id
-//`
   );
   return xmlString;
 }

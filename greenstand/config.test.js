@@ -45,8 +45,19 @@ describe.only("getXMLString", () => {
 
   it("basic", async () => {
     const xmlString = await getXMLString(2);
-    expect(xmlString).toMatch(/FROM active_tree_region tree_region/s);
+    expect(xmlString).toMatch(/case1/s);
   });
+
+  it("level 12", async () => {
+    const xmlString = await getXMLString(12);
+    expect(xmlString).toMatch(/case4/s);
+  });
+
+  it("level 16", async () => {
+    const xmlString = await getXMLString(16);
+    expect(xmlString).toMatch(/case2/s);
+  });
+
 
 });
 

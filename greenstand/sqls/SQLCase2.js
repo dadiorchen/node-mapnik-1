@@ -126,8 +126,13 @@ class SQLCase2{
     let sql = `
       /* sql case2 */
       SELECT /* DISTINCT ON(trees.id) */
+      estimated_geometric_location,
+      St_asgeojson(estimated_geometric_location) latlon,
       'point' AS type,
-       trees.id, trees.lat, trees.lon 
+       trees.id, 
+       trees.lat, 
+       trees.lon,
+      1 as count
       FROM trees 
       ${this.getJoin()}
       WHERE active = true 
@@ -137,12 +142,7 @@ class SQLCase2{
     ` 
     ;
     console.log(sql);
-
-    const query = {
-      text: sql,
-      values: [],
-    };
-    return query;
+    return sql;
   }
 }
 

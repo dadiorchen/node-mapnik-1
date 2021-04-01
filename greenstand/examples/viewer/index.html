@@ -60,7 +60,8 @@
   });
   utfGridLayer.on('mouseover', function (e) {
     console.log("over e:", e);
-    marker = L.marker([e.data.lat, e.data.lon],{
+    const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+    marker = L.marker([lat, lon],{
       icon: myIcon,
     });
     marker.addTo(mymap);

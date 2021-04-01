@@ -136,7 +136,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 
   var grid = new mapnik.Grid(256, 256);
   const json = await new Promise((res, _rej) => {
-    map.render(grid, {layer:"l1", fields:['id', 'lat', 'lon']}, function(err, grid) {
+    map.render(grid, {layer:"l1", fields:['id', 'latlon']}, function(err, grid) {
       if (err) throw err;
       console.log(grid);
       const json = grid.encodeSync({resolution: 4, features: true});

@@ -111,6 +111,7 @@ class SQLCase1{
       SELECT 'cluster' AS type,
       region_id id, 
       centroid estimated_geometric_location,
+      St_asgeojson(centroid) latlon,
       type_id as region_type,
       count(tree_region.id) count
       FROM active_tree_region tree_region
