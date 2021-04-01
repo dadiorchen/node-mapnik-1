@@ -1,3 +1,10 @@
+## [4.8.10](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.9...v4.8.10) (2021-04-01)
+
+
+### Bug Fixes
+
+* add order by to sql ([f703c68](https://github.com/Greenstand/node-mapnik-1/commit/f703c6809615553b51a698b2bd4d1a6a54d4fed1))
+
 ## [4.8.9](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.8...v4.8.9) (2021-04-01)
 
 
