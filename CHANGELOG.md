@@ -1,3 +1,10 @@
+## [4.8.9](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.8...v4.8.9) (2021-04-01)
+
+
+### Bug Fixes
+
+* increase buffer size, remove avoid_edges ([586f16c](https://github.com/Greenstand/node-mapnik-1/commit/586f16cb2f02ff43ff77dd2cc183e0a8062ace09))
+
 ## [4.8.8](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.7...v4.8.8) (2021-04-01)
 
 
