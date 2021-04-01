@@ -1,3 +1,10 @@
+## [4.8.8](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.7...v4.8.8) (2021-04-01)
+
+
+### Bug Fixes
+
+* try avoid_edges = false ([bc4f962](https://github.com/Greenstand/node-mapnik-1/commit/bc4f962bfacc7efc4b9e491fa58449bee7cae2e7))
+
 ## [4.8.7](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.6...v4.8.7) (2021-03-31)
 
 
