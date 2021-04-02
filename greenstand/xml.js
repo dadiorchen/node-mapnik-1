@@ -28,7 +28,7 @@ const xml =`
 </Layer>
 -->
 
-<Style name="layer0" filter-mode="first" >
+<Style name="layer1" filter-mode="first" >
   <Rule>
     <PointSymbolizer
       file="../greenstand/images/cluster_46px.png"
@@ -39,6 +39,7 @@ const xml =`
     <TextSymbolizer
       face-name="DejaVu Serif Condensed Bold Italic" 
       fill="black" 
+      allow-overlap="true"
       size="14"
     >
       [count]
@@ -46,6 +47,20 @@ const xml =`
     <!--
     <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
     -->
+  </Rule>
+</Style>
+<Style name="layer0" filter-mode="first" >
+  <Rule>
+    <ShieldSymbolizer
+        face-name="DejaVu Serif Condensed Bold Italic" 
+        size="14" 
+        fill="black"
+        file="../greenstand/images/cluster_46px.png" 
+        spacing="0" 
+        allow-overlap="true"
+    >
+      [count]
+    </ShieldSymbolizer>
   </Rule>
 </Style>
 <Layer name="l1"
