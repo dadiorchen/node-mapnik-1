@@ -20,7 +20,7 @@ app.use('/viewer', express.static(viewer));
 const images = path.join(__dirname, './examples/viewer/images');
 app.use('/viewer/images', express.static(images));
 
-app.get("/:z/:x/:y.png", async (req, res) => {
+app.get(":z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
@@ -73,7 +73,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
 
 });
 
-app.get("/:z/:x/:y.grid.json", async (req, res) => {
+app.get(":z/:x/:y.grid.json", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
@@ -141,7 +141,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 });
 
 //freetown
-app.get("/freetown/:z/:x/:y.png", async (req, res) => {
+app.get("freetown/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
@@ -199,7 +199,7 @@ app.get("/freetown/:z/:x/:y.png", async (req, res) => {
 
 });
 
-app.get("/freetown/:z/:x/:y.grid.json", async (req, res) => {
+app.get("freetown/:z/:x/:y.grid.json", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
