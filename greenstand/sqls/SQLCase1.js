@@ -91,23 +91,18 @@ class SQLCase1{
 
   getQuery(){
     //TODO check the conflict case, like: can not set userid and treeIds at the same time
-//    const query = {
-//      text: `
-//      /* sql case1 */
-//      SELECT 'cluster' AS type,
-//      region_id id, ST_ASGeoJson(centroid) centroid,
-//      type_id as region_type,
-//      count(tree_region.id)
-//      FROM active_tree_region tree_region
-//      ${this.getJoin()}
-//      WHERE zoom_level = $1
-//      ${this.getFilter()}
-//      ${this.getBoundingBoxQuery()}
-//      GROUP BY region_id, centroid, type_id`,
-//      values: [this.getZoomLevel()]
-//    };
     const text =  `
       /* sql case1 */
+SELECT 
+	'cluster' AS type,
+	cluster_1.id,
+	cluster_1.estimated_geometric_location,
+	cluster_1.latlon,
+	cluster_1.region_type,
+	cluster_1.count,
+	cluster_1.count_text,
+	zoom_target.centroid zoom_to
+FROM (
       SELECT 'cluster' AS type,
       region_id id, 
       centroid estimated_geometric_location,
@@ -123,7 +118,57 @@ class SQLCase1{
       WHERE zoom_level = ${this.getZoomLevel()}
       ${this.getFilter()}
       ${this.getBoundingBoxQuery()}
-      GROUP BY region_id, centroid, type_id`;
+      GROUP BY region_id, centroid, type_id
+) cluster_1
+JOIN 
+(SELECT
+	DISTINCT ON
+	(region.id) region.id region_id,
+	contained.region_id most_populated_subregion_id,
+	contained.total,
+	contained.zoom_level,
+	ST_ASGeoJson(contained.centroid) centroid
+FROM
+	(
+	SELECT
+		region_id,
+		zoom_level
+	FROM
+		active_tree_region
+	WHERE
+		zoom_level = ${this.getZoomLevel()}
+    ${this.getFilter()}
+	GROUP BY
+		region_id,
+		zoom_level ) populated_region
+JOIN region ON
+	region.id = populated_region.region_id
+JOIN (
+	SELECT
+		region_id,
+		zoom_level,
+		count(active_tree_region.id) AS total,
+		centroid
+	FROM
+		active_tree_region
+	WHERE
+		zoom_level = ${this.getZoomLevel() + 2}
+    ${this.getFilter()}
+	GROUP BY
+		region_id,
+		zoom_level,
+		centroid ) contained ON
+	ST_CONTAINS(region.geom,
+	contained.centroid)
+WHERE
+	TRUE
+  ${this.getBoundingBoxQuery()}
+ORDER BY
+	region.id,
+	total DESC
+) zoom_target
+ON cluster_1.id = zoom_target.region_id
+    `;
     return text;
   }
 }
