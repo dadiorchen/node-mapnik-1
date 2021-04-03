@@ -51,6 +51,8 @@ const xml =`
 </Style>
 <Style name="layer0" filter-mode="first" >
   <Rule>
+    <Filter>[count] &lt;= 1000 </Filter>
+    <DebugSymbolizer />
     <ShieldSymbolizer
         face-name="DejaVu Serif Condensed Bold Italic" 
         size="14" 
@@ -59,7 +61,21 @@ const xml =`
         spacing="0" 
         allow-overlap="true"
     >
-      [count]
+      [count_text]
+    </ShieldSymbolizer>
+  </Rule>
+  <Rule>
+    <Filter>[count] &gt; 1000 </Filter>
+    <DebugSymbolizer />
+    <ShieldSymbolizer
+        face-name="DejaVu Serif Condensed Bold Italic" 
+        size="14" 
+        fill="black"
+        file="../greenstand/images/cluster_63px.png" 
+        spacing="0" 
+        allow-overlap="true"
+    >
+      [count_text]
     </ShieldSymbolizer>
   </Rule>
 </Style>

@@ -113,7 +113,11 @@ class SQLCase1{
       centroid estimated_geometric_location,
       St_asgeojson(centroid) latlon,
       type_id as region_type,
-      count(tree_region.id) count
+      count(tree_region.id) count,
+      CASE WHEN count(tree_region.id) > 1000 
+      THEN  (count(tree_region.id) / 1000) || 'K'
+      ELSE count(tree_region.id) || ''
+      END AS count_text
       FROM active_tree_region tree_region
       ${this.getJoin()}
       WHERE zoom_level = ${this.getZoomLevel()}
