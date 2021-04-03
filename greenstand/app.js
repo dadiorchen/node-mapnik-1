@@ -10,6 +10,14 @@ const {setSql} = require("./utils");
 config();
 configFreetown();
 
+//font
+mapnik.register_default_fonts();
+mapnik.register_default_input_plugins();
+log.warn("fonts:", mapnik.fonts());
+const mapInstance = new mapnik.Map(256, 256);
+mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
+log.warn("font instance:", mapInstance.fonts());
+
 const app = express();
 app.use(cors());
 
@@ -18,6 +26,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
   mapnik.register_default_input_plugins();
+  log.warn("fonts:", mapnik.fonts());
   const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
@@ -136,7 +145,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 
   var grid = new mapnik.Grid(256, 256);
   const json = await new Promise((res, _rej) => {
-    map.render(grid, {layer:"l1", fields:['id', 'latlon']}, function(err, grid) {
+    map.render(grid, {layer:"l1", fields:['id', 'latlon', 'count']}, function(err, grid) {
       if (err) throw err;
       console.log(grid);
       const json = grid.encodeSync({resolution: 4, features: true});

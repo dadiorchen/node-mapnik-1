@@ -52,9 +52,8 @@ const xml =`
 <Style name="layer0" filter-mode="first" >
   <Rule>
     <Filter>[count] &lt;= 1000 </Filter>
-    <DebugSymbolizer />
     <ShieldSymbolizer
-        face-name="DejaVu Serif Condensed Bold Italic" 
+        face-name="Roboto Regular" 
         size="14" 
         fill="black"
         file="../greenstand/images/cluster_46px.png" 
@@ -66,9 +65,8 @@ const xml =`
   </Rule>
   <Rule>
     <Filter>[count] &gt; 1000 </Filter>
-    <DebugSymbolizer />
     <ShieldSymbolizer
-        face-name="DejaVu Serif Condensed Bold Italic" 
+        face-name="Roboto Regular" 
         size="14" 
         fill="black"
         file="../greenstand/images/cluster_63px.png" 

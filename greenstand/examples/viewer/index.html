@@ -41,7 +41,8 @@
     if (e.data) {
       console.log('click', e.data);
 //      mymap.panTo(e.latlng);
-      mymap.setView(e.latlng, mymap.getZoom() + 2);
+      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+      mymap.setView([lat, lon], mymap.getZoom() + 2);
     } else {
       console.log('click nothing');
     }
