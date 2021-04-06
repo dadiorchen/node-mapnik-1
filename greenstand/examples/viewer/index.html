@@ -34,8 +34,8 @@
 	}).addTo(mymap);
 
   var baseURL_def = "";
-  new L.tileLayer(baseURL_def + '/{z}/{x}/{y}.png').addTo(mymap);
-  var utfGridLayer = new L.utfGrid(baseURL_def + '/{z}/{x}/{y}.grid.json');
+  new L.tileLayer(baseURL_def + '/{z}/{x}/{y}.png' + window.location.search).addTo(mymap);
+  var utfGridLayer = new L.utfGrid(baseURL_def + '/{z}/{x}/{y}.grid.json' + window.location.search);
   utfGridLayer.on('click', function (e) {
     console.log("e:", e);
     if (e.data) {

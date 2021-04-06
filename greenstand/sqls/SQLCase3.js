@@ -116,23 +116,20 @@ class SQLCase3{
 
   getQuery(){
     console.log('Calculating clusters directly');
-    const query = {
-      text: `
+    const query =  `
         /* case3 */
         SELECT 'cluster'                                           AS type,
         St_asgeojson(St_centroid(clustered_locations))                 centroid,
         St_numgeometries(clustered_locations)                          count
         FROM   (
-        SELECT Unnest(St_clusterwithin(estimated_geometric_location, $1)) clustered_locations
+        SELECT Unnest(St_clusterwithin(estimated_geometric_location, ${this.getClusterRadius()})) clustered_locations
         FROM   trees 
         ${this.getJoin()}
         WHERE  active = true 
         ${this.getBoundingBoxQuery()} 
         ${this.getFilter()} 
         ${this.getJoinCriteria()}  
-        ) clusters`,
-      values: [this.getClusterRadius()]
-    };
+        ) clusters`;
     return query;
   }
 }

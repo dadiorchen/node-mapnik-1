@@ -90,7 +90,11 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-async function getXMLString(zoomLevel){
+async function getXMLString(options){
+  const {
+    zoomLevel,
+    userid,
+  } = options;
   const zoomLevelInt = parseInt(zoomLevel);
   let xmlTemplate;
   if(zoomLevelInt > 15){
@@ -102,6 +106,7 @@ async function getXMLString(zoomLevel){
   const map = new Map();
   await map.init({
     zoom_level: zoomLevelInt,
+    userid,
   });
   const sql = await map.getQuery();
   log.warn("sql:", sql);

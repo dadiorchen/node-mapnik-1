@@ -12,7 +12,7 @@ const SQLZoomTargetCase1V2 = require("./sqls/SQLZoomTargetCase1V2");
 
 class Map{
   constructor(){
-    this.pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    this.pool = new Pool({ connectionString: process.env.DB_URL });
   }
 
   async init(settings){
@@ -49,6 +49,7 @@ class Map{
       });
       const treeCount = result.rows[0].count;
       parseInt(treeCount);
+      log.warn("count by userId %d, get %s", this.userid, treeCount);
       if(this.zoomLevel > 15){
         this.sql = new SQLCase2();
         this.sql.setBounds(this.bounds);

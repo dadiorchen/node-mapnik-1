@@ -32,7 +32,10 @@ app.get("/:z/:x/:y.png", async (req, res) => {
     mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
     const define = path.join(__dirname, '../test/postgis.prod.xml');
     
-    const xmlString = await getXMLString(z);
+    const xmlString = await getXMLString({
+      zoomLevel: z,
+      ...req.query,
+    });
 
     mapInstance.fromString(xmlString, {
       strict: true,
@@ -95,7 +98,10 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
     const define = path.join(__dirname, '../test/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    const xmlString = await getXMLString(z);
+    const xmlString = await getXMLString({
+      zoomLevel: z,
+      ...req.query,
+    });
     mapInstance.fromString(xmlString, {
       strict: true,
       base: __dirname,
@@ -145,7 +151,15 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 
   var grid = new mapnik.Grid(256, 256);
   const json = await new Promise((res, _rej) => {
-    map.render(grid, {layer:"l1", fields:['id', 'latlon', 'count', 'zoom_to' ]}, function(err, grid) {
+    map.render(
+      grid, {
+        layer:"l1", 
+        fields:[
+          'id', 
+          'latlon', 
+          'count', 
+//          'zoom_to',
+        ]}, function(err, grid) {
       if (err) throw err;
       console.log(grid);
       const json = grid.encodeSync({resolution: 4, features: true});

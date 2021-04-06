@@ -1,7 +1,10 @@
+jest.mock("pg");
 const path = require("path");
 const fs = require("fs");
 const {config, configFreetown, getXMLString} = require("./config");
 const xml = require("./xml");
+const { Pool} = require('pg');
+
 
 describe("", () => {
 
@@ -43,20 +46,68 @@ describe("", () => {
 
 describe.only("getXMLString", () => {
 
-  it("basic", async () => {
-    const xmlString = await getXMLString(2);
-    expect(xmlString).toMatch(/case1/s);
+  describe("basic", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("level 12", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+      });
+      expect(xmlString).toMatch(/case4/s);
+    });
+
+    it("level 16", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 16,
+      });
+      expect(xmlString).toMatch(/case2/s);
+    });
   });
 
-  it("level 12", async () => {
-    const xmlString = await getXMLString(12);
-    expect(xmlString).toMatch(/case4/s);
+  describe("useid", () => {
+
+    it("basic, count = 10", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 10,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("count = 5000", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 5000,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
   });
 
-  it("level 16", async () => {
-    const xmlString = await getXMLString(16);
-    expect(xmlString).toMatch(/case2/s);
-  });
 
 
 });
