@@ -62,7 +62,7 @@ class Map{
           this.sql.setBounds(this.bounds);
         }else{
           this.sql = new SQLCase3();
-          this.sql.setClusterRadius(this.clusterRadius);
+          this.sql.setZoomLevel(this.zoomLevel);
           this.sql.addFilterByUserid(this.userid);
           this.sql.setBounds(this.bounds);
         }
@@ -83,7 +83,7 @@ class Map{
         this.sql.addFilterByWallet(this.wallet);
       }else{
         this.sql = new SQLCase3();
-        this.sql.setClusterRadius(this.clusterRadius);
+        this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByWallet(this.wallet);
         this.sql.setBounds(this.bounds);
       }
@@ -103,7 +103,7 @@ class Map{
         this.sql.addFilterByFlavor(this.flavor);
       }else{
         this.sql = new SQLCase3();
-        this.sql.setClusterRadius(this.clusterRadius);
+        this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByFlavor(this.flavor);
         this.sql.setBounds(this.bounds);
       }
@@ -123,7 +123,7 @@ class Map{
         this.sql.addFilterByToken(this.token);
       }else{
         this.sql = new SQLCase3();
-        this.sql.setClusterRadius(this.clusterRadius);
+        this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByToken(this.token);
         this.sql.setBounds(this.bounds);
       }
@@ -143,7 +143,7 @@ class Map{
         this.sql.setBounds(this.bounds);
       } else if ([12, 13, 14, 15].includes(this.zoomLevel) && this.mapName != 'freetown') {
         this.sql = new SQLCase3();
-        this.sql.setClusterRadius(this.clusterRadius);
+        this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByMapName(this.mapName);
         this.sql.setBounds(this.bounds);
       }else{
@@ -166,7 +166,7 @@ class Map{
         this.sql.setBounds(this.bounds);
       } else if ([12, 13, 14, 15].includes(this.zoomLevel) ) {
         this.sql = new SQLCase3Timeline();
-        this.sql.setClusterRadius(this.clusterRadius);
+        this.sql.setZoomLevel(this.zoomLevel);
         this.sql.setBounds(this.bounds);
         this.sql.addTimeline(this.timeline);
       }else{

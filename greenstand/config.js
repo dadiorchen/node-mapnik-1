@@ -94,6 +94,7 @@ async function getXMLString(options){
   const {
     zoomLevel,
     userid,
+    wallet,
   } = options;
   const zoomLevelInt = parseInt(zoomLevel);
   let xmlTemplate;
@@ -107,6 +108,7 @@ async function getXMLString(options){
   await map.init({
     zoom_level: zoomLevelInt,
     userid,
+    wallet,
   });
   const sql = await map.getQuery();
   log.warn("sql:", sql);

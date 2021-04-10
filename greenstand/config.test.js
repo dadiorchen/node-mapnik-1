@@ -70,9 +70,9 @@ describe.only("getXMLString", () => {
     });
   });
 
-  describe("useid", () => {
+  describe("userid", () => {
 
-    it("basic, count = 10", async () => {
+    it.only("basic, count = 10", async () => {
       const query = jest.fn()
         .mockResolvedValue({
           rows: [{
@@ -85,6 +85,35 @@ describe.only("getXMLString", () => {
       const xmlString = await getXMLString({
         zoomLevel: 2,
         userid: 1,
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("count = 5000", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 5000,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+  });
+
+  describe("wallet", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        wallet: "dadiorchen",
       });
       expect(xmlString).toMatch(/case3/s);
     });

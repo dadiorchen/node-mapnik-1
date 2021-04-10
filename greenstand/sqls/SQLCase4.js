@@ -28,7 +28,11 @@ class SQLCase4{
           location estimated_geometric_location,
           St_asgeojson(location) centroid, 
           St_asgeojson(location) latlon,
-          count
+          count,
+          CASE WHEN count > 1000 
+          THEN  (count / 1000) || 'K'
+          ELSE count || ''
+          END AS count_text
           FROM clusters
           WHERE zoom_level = 14 
           ${this.getBoundingBoxQuery()}

@@ -189,6 +189,7 @@ class SQLCase1{
 //ON cluster_1.id = zoom_target.region_id
 //    `;
     const text = `
+      /* sql case1 */
       SELECT 'cluster' AS type,
       region_id id, 
       centroid estimated_geometric_location,
