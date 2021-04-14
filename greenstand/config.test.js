@@ -44,7 +44,7 @@ describe("", () => {
   });
 });
 
-describe.only("getXMLString", () => {
+describe("getXMLString", () => {
 
   describe("basic", () => {
 
@@ -72,7 +72,7 @@ describe.only("getXMLString", () => {
 
   describe("userid", () => {
 
-    it.only("basic, count = 10", async () => {
+    it("basic, count = 10", async () => {
       const query = jest.fn()
         .mockResolvedValue({
           rows: [{
@@ -133,6 +133,42 @@ describe.only("getXMLString", () => {
         userid: 1,
       });
       expect(xmlString).toMatch(/case1/s);
+    });
+
+  });
+
+  describe.only("map_name", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("zoom = 12, freetown", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("zoom = 12, !freetown", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+        map_name: "Haiti",
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("zoom = 16", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 16,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case2/s);
     });
 
   });

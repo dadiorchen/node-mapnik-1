@@ -17,6 +17,8 @@ log.warn("fonts:", mapnik.fonts());
 const mapInstance = new mapnik.Map(256, 256);
 mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
 log.warn("font instance:", mapInstance.fonts());
+mapnik.Logger.setSeverity(mapnik.Logger.DEBUG);
+log.warn("log level of mapnik:", mapnik.Logger.getSeverity());
 
 const app = express();
 app.use(cors());
