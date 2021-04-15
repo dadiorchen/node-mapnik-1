@@ -14,6 +14,10 @@ class SQLCase3{
     this.zoomLevel = zoomLevel;
   }
 
+  getZoomLevel(){
+    return this.zoomLevel;
+  }
+
   getClusterRadius(){
     //calculate cluster radius by zoom level
     parseInt(this.zoomLevel)
@@ -161,6 +165,7 @@ class SQLCase3{
         SELECT 'cluster'                                           AS type,
         0 AS id,
         'case3 tile' AS log,
+        NULL AS zoom_to,
         St_asgeojson(St_centroid(clustered_locations))                 latlon,
         St_centroid(clustered_locations) estimated_geometric_location,
         St_numgeometries(clustered_locations)                          count,
