@@ -148,16 +148,10 @@ class Map{
         this.sql.addFilterByMapName(this.mapName);
         this.sql.setBounds(this.bounds);
       }else{
-        this.sql = new SQLCase1();
+        this.sql = new SQLCase1WithZoomTarget();
         this.sql.addMapNameFilter(this.mapName);
         this.sql.setBounds(this.bounds);
         this.sql.setZoomLevel(this.zoomLevel);
-      }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
-        this.sqlZoomTarget.addMapNameFilter(this.mapName);
       }
 
     }else if(this.timeline){
