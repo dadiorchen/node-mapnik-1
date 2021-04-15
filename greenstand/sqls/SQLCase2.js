@@ -124,8 +124,9 @@ class SQLCase2{
 
   getQuery(){
     let sql = `
-      /* sql case2 */
+      /* sql case2 tile */
       SELECT /* DISTINCT ON(trees.id) */
+      'case2 tile' AS log,
       estimated_geometric_location,
       St_asgeojson(estimated_geometric_location) latlon,
       'point' AS type,

@@ -161,7 +161,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
           'latlon', 
           'count', 
           'type',
-//          'zoom_to',
+          'zoom_to',
         ]}, function(err, grid) {
       if (err) throw err;
       console.log(grid);

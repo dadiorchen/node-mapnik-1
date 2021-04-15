@@ -37,7 +37,7 @@ class SQLCase2Timeline extends SQLCase2{
 
   getQuery(){
     let sql = `
-      /* sql case2 */
+      /* sql case2 tile */
       SELECT /* DISTINCT ON(trees.id) */
       'point' AS type,
        trees.id, trees.lat, trees.lon 

@@ -50,8 +50,9 @@ class SQLZoomTargetCase1{
   getQuery(){
     const query = {
       text: `
-              /* case6 zoom target */
+              /* case6 zoom target tile */
               SELECT DISTINCT ON (region.id)
+                'case6 tile' AS log,
                 region.id region_id,
                 contained.region_id most_populated_subregion_id,
                 contained.total,

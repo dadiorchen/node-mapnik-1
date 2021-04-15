@@ -157,9 +157,10 @@ class SQLCase3{
   getQuery(){
     console.log('Calculating clusters directly');
     const query =  `
-        /* case3 */
+        /* case3 tile */
         SELECT 'cluster'                                           AS type,
         0 AS id,
+        'case3 tile' AS log,
         St_asgeojson(St_centroid(clustered_locations))                 latlon,
         St_centroid(clustered_locations) estimated_geometric_location,
         St_numgeometries(clustered_locations)                          count,

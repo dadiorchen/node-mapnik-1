@@ -42,26 +42,27 @@ class SQLCase3Timeline extends SQLCase3{
     return result;
   }
 
-  getQuery(){
+  getQuery2(){
     console.log('case 3 timline');
-    const query = {
-      text: `
+//    const query = {
+    const text= `
         /* case3 timelinej*/
         SELECT 'cluster'                                           AS type,
         St_asgeojson(St_centroid(clustered_locations))                 centroid,
         St_numgeometries(clustered_locations)                          count
         FROM   (
-        SELECT Unnest(St_clusterwithin(estimated_geometric_location, $1)) clustered_locations
+        SELECT Unnest(St_clusterwithin(estimated_geometric_location, ${this.getClusterRadius()})) clustered_locations
         FROM   trees 
         ${this.getJoin()}
         WHERE  active = true 
         ${this.getBoundingBoxQuery()} 
         ${this.getFilter()} 
         ${this.getJoinCriteria()}  
-        ) clusters`,
-      values: [this.getClusterRadius()]
-    };
-    return query;
+        ) clusters`;
+//      values: [this.getClusterRadius()]
+//    };
+//    return query;
+    return text;
   }
 }
 

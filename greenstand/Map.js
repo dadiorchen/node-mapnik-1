@@ -3,6 +3,7 @@ const { Pool} = require('pg');
 const SQLCase2 = require("./sqls/SQLCase2");
 const SQLCase2Timeline = require("./sqls/SQLCase2Timeline");
 const SQLCase1 = require("./sqls/SQLCase1");
+const SQLCase1WithZoomTarget = require("./sqls/SQLCase1WithZoomTarget");
 const SQLCase1Timeline = require("./sqls/SQLCase1Timeline");
 const SQLCase3Timeline = require("./sqls/SQLCase3Timeline");
 const SQLCase3 = require("./sqls/SQLCase3");
@@ -186,7 +187,7 @@ class Map{
         this.sql = new SQLCase4();
         this.sql.setBounds(this.bounds)
       }else{
-        this.sql = new SQLCase1();
+        this.sql = new SQLCase1WithZoomTarget();
         this.sql.setBounds(this.bounds)
         this.sql.setZoomLevel(this.zoomLevel);
       }

@@ -21,10 +21,11 @@ class SQLCase4{
 
   getQuery(){
       const text = `
-          /* case4 */
+          /* case4 tile */
           SELECT 
           id,
           'cluster' as type,
+          'case4 tile' AS log,
           location estimated_geometric_location,
           St_asgeojson(location) centroid, 
           St_asgeojson(location) latlon,
