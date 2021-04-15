@@ -57,7 +57,7 @@ class Map{
         this.sql.addFilterByUserId(this.userid);
       }else{
         if(treeCount > 2000){
-          this.sql = new SQLCase1();
+          this.sql = new SQLCase1WithZoomTarget();
           this.sql.addFilterByUserId(this.userid);
           this.sql.setZoomLevel(this.zoomLevel);
           this.sql.setBounds(this.bounds);
@@ -190,11 +190,6 @@ class Map{
         this.sql = new SQLCase1WithZoomTarget();
         this.sql.setBounds(this.bounds)
         this.sql.setZoomLevel(this.zoomLevel);
-      }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
       }
     }
     return;

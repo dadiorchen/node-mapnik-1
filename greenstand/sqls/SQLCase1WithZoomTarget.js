@@ -38,8 +38,8 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     SELECT
       region_id,
       zoom_level
-    FROM
-      active_tree_region
+    FROM active_tree_region tree_region
+    ${this.getJoin()}
     WHERE
       zoom_level = ${this.getZoomLevel()}
       ${this.getFilter()}
@@ -52,10 +52,10 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     SELECT
       region_id,
       zoom_level,
-      count(active_tree_region.id) AS total,
+      count(tree_region.id) AS total,
       centroid
-    FROM
-      active_tree_region
+    FROM active_tree_region tree_region
+    ${this.getJoin()}
     WHERE
       zoom_level = ${this.getZoomLevel() + 2}
       ${this.getFilter()}
