@@ -133,6 +133,7 @@ class SQLCase2{
        trees.id, 
        trees.lat, 
        trees.lon,
+      NULL AS zoom_to,
       1 as count
       FROM trees 
       ${this.getJoin()}
