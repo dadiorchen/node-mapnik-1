@@ -3,10 +3,22 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
-const {config, configFreetown} = require("./config");
+const {config, configFreetown, getXMLString} = require("./config");
+const fs = require("fs");
+const {setSql} = require("./utils");
 
 config();
 configFreetown();
+
+//font
+mapnik.register_default_fonts();
+mapnik.register_default_input_plugins();
+log.warn("fonts:", mapnik.fonts());
+const mapInstance = new mapnik.Map(256, 256);
+mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
+log.warn("font instance:", mapInstance.fonts());
+mapnik.Logger.setSeverity(mapnik.Logger.DEBUG);
+log.warn("log level of mapnik:", mapnik.Logger.getSeverity());
 
 const app = express();
 app.use(cors());
@@ -25,12 +37,21 @@ app.get("/:z/:x/:y.png", async (req, res) => {
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
   mapnik.register_default_input_plugins();
-  const map = await new Promise((res, rej) => {
+  log.warn("fonts:", mapnik.fonts());
+  const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, './layers/postgis.prod.xml');
-//    const define = path.join(__dirname, 'stylesheet.xml');
-    console.log("path:", define);
-    mapInstance.load(define, {strict: true},function(err,_map) {
+    mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
+    const define = path.join(__dirname, '../test/postgis.prod.xml');
+    
+    const xmlString = await getXMLString({
+      zoomLevel: z,
+      ...req.query,
+    });
+
+    mapInstance.fromString(xmlString, {
+      strict: true,
+      base: __dirname,
+    },function(err,_map) {
       if(err){
         console.error("e:", err);
         throw "failed";
@@ -78,12 +99,19 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   const mercator = require('./sphericalmercator')
   mapnik.register_default_fonts();
   mapnik.register_default_input_plugins();
-  const map = await new Promise((res, rej) => {
+  const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     const define = path.join(__dirname, './layers/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
-    mapInstance.load(define, {strict: true},function(err,_map) {
+    const xmlString = await getXMLString({
+      zoomLevel: z,
+      ...req.query,
+    });
+    mapInstance.fromString(xmlString, {
+      strict: true,
+      base: __dirname,
+    },function(err,_map) {
       if(err){
         console.error("e:", err);
         throw "failed";
@@ -129,7 +157,16 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 
   var grid = new mapnik.Grid(256, 256);
   const json = await new Promise((res, _rej) => {
-    map.render(grid, {layer:"l1", fields:['id', 'lat', 'lon']}, function(err, grid) {
+    map.render(
+      grid, {
+        layer:"l1", 
+        fields:[
+          'id', 
+          'latlon', 
+          'count', 
+          'type',
+          'zoom_to',
+        ]}, function(err, grid) {
       if (err) throw err;
       console.log(grid);
       const json = grid.encodeSync({resolution: 4, features: true});
