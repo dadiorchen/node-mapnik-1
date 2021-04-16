@@ -1,3 +1,175 @@
+## [4.8.10](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.9...v4.8.10) (2021-04-01)
+
+
+### Bug Fixes
+
+* add order by to sql ([f703c68](https://github.com/Greenstand/node-mapnik-1/commit/f703c6809615553b51a698b2bd4d1a6a54d4fed1))
+
+## [4.8.9](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.8...v4.8.9) (2021-04-01)
+
+
+### Bug Fixes
+
+* increase buffer size, remove avoid_edges ([586f16c](https://github.com/Greenstand/node-mapnik-1/commit/586f16cb2f02ff43ff77dd2cc183e0a8062ace09))
+
+## [4.8.8](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.7...v4.8.8) (2021-04-01)
+
+
+### Bug Fixes
+
+* try avoid_edges = false ([bc4f962](https://github.com/Greenstand/node-mapnik-1/commit/bc4f962bfacc7efc4b9e491fa58449bee7cae2e7))
+
+## [4.8.7](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.6...v4.8.7) (2021-03-31)
+
+
+### Bug Fixes
+
+* path for image ([c9075dd](https://github.com/Greenstand/node-mapnik-1/commit/c9075dd1374f7465ada53261758ec3a34658d492))
+
+## [4.8.6](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.5...v4.8.6) (2021-03-31)
+
+
+### Bug Fixes
+
+* move pin png ([7845653](https://github.com/Greenstand/node-mapnik-1/commit/7845653d13f809205b9813f4aceea1ba0ccaa607))
+
+## [4.8.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.4...v4.8.5) (2021-03-31)
+
+
+### Bug Fixes
+
+* increase size of buffer ([add9169](https://github.com/Greenstand/node-mapnik-1/commit/add9169347635d1073f7c698ff92c4b6d443ee22))
+
+## [4.8.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.3...v4.8.4) (2021-03-31)
+
+
+### Bug Fixes
+
+* use the folder layers to store xmls ([d9e18c5](https://github.com/Greenstand/node-mapnik-1/commit/d9e18c52ff7d797eddff16fba68559ff3b1ffc34))
+
+## [4.8.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.2...v4.8.3) (2021-03-31)
+
+
+### Bug Fixes
+
+* broken viewer ([1bb72a0](https://github.com/Greenstand/node-mapnik-1/commit/1bb72a0c66868161ba1b1a6ce731a41e16c577f8))
+* bug, should filter trees by active = true ([d9e01ff](https://github.com/Greenstand/node-mapnik-1/commit/d9e01ffc96f7f7ad5085e021d023bf8bfe571968))
+
+## [4.8.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.1...v4.8.2) (2021-03-18)
+
+
+### Bug Fixes
+
+* viewer path ([747a5dd](https://github.com/Greenstand/node-mapnik-1/commit/747a5ddf17ee13da6ff58b8c6fd8660760100920))
+
+## [4.8.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.0...v4.8.1) (2021-03-18)
+
+
+### Bug Fixes
+
+* zoom level problem ([9fb69c9](https://github.com/Greenstand/node-mapnik-1/commit/9fb69c960fd43529f5dfa10888b3dc535c81a259))
+
+# [4.8.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.4...v4.8.0) (2021-03-17)
+
+
+### Bug Fixes
+
+* broken tests ([0a2ab96](https://github.com/Greenstand/node-mapnik-1/commit/0a2ab9658deeb79942044b08231c61fdf0290a3a))
+
+
+### Features
+
+* add example viewer, usage: http://deployedhost/viewer ([ac6c0ac](https://github.com/Greenstand/node-mapnik-1/commit/ac6c0acd8d16fd2ff2c8cce833eb701554db4ad5))
+* decrese buffer-size to improve performace ([6ec0168](https://github.com/Greenstand/node-mapnik-1/commit/6ec0168f1e82b8b6382dd8797cedb0aa84cd1df9))
+* freetown config ([f8762c2](https://github.com/Greenstand/node-mapnik-1/commit/f8762c230c8373d8e20980412bfd812625a279a3))
+* freetown tile ([ba725f9](https://github.com/Greenstand/node-mapnik-1/commit/ba725f9395a720226c995ae53dd3a5542a2a5cf1))
+
+## [4.7.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.3...v4.7.4) (2021-03-12)
+
+
+### Bug Fixes
+
+* scale up ([9873597](https://github.com/Greenstand/node-mapnik-1/commit/9873597a473d675551f204a59e5844fe072fe088))
+
+## [4.7.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.2...v4.7.3) (2021-03-12)
+
+
+### Bug Fixes
+
+* trigger build ([96a4569](https://github.com/Greenstand/node-mapnik-1/commit/96a4569f365ca55ee421231ddb42d515d9073829))
+
+## [4.7.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.1...v4.7.2) (2021-03-12)
+
+
+### Bug Fixes
+
+* correct mapping ([69abcc4](https://github.com/Greenstand/node-mapnik-1/commit/69abcc4d2564b654069e3ef27bd601fbe2a70056))
+
+## [4.7.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.7.0...v4.7.1) (2021-03-11)
+
+
+### Bug Fixes
+
+* fix name of repository ([e8a0fbd](https://github.com/Greenstand/node-mapnik-1/commit/e8a0fbd273b26ed3963b419ec782161f4fc3f28d))
+* update description and default for image tag [skip ci] ([2098c0a](https://github.com/Greenstand/node-mapnik-1/commit/2098c0ad250f5cf9a1c33dae2d8131673da7e686))
+
+# [4.7.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.1...v4.7.0) (2021-03-11)
+
+
+### Bug Fixes
+
+* set up mapping for DB_URL env var ([4dd9100](https://github.com/Greenstand/node-mapnik-1/commit/4dd9100b4985a61622f00790889ed5512810f532))
+
+
+### Features
+
+* add env var ([f19ba0e](https://github.com/Greenstand/node-mapnik-1/commit/f19ba0e84b6907f36368528a480baf586644dc8e))
+* switch to single fully connection string ([166b530](https://github.com/Greenstand/node-mapnik-1/commit/166b530220c6bd12d869cd423a5000662bbc3950))
+
+## [4.6.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.6.0...v4.6.1) (2021-03-11)
+
+
+### Bug Fixes
+
+* add database connection sealed secret ([37d6c19](https://github.com/Greenstand/node-mapnik-1/commit/37d6c1943e82115a68e2c340df7454f62b3833f8))
+* update deployment ([7c9279d](https://github.com/Greenstand/node-mapnik-1/commit/7c9279d14492986a6e65b6b7dee96d35e1218b1f))
+
+# [4.6.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.5.6...v4.6.0) (2021-03-11)
+
+
+### Bug Fixes
+
+* add deployment files ([5494d4a](https://github.com/Greenstand/node-mapnik-1/commit/5494d4a00a76e2d3ff92e25b0dd328a0c1019f07))
+* add private true ([57b445a](https://github.com/Greenstand/node-mapnik-1/commit/57b445a32ce8aa2afaaae068b90850acc9802772))
+* change name of project ([5940995](https://github.com/Greenstand/node-mapnik-1/commit/5940995860c4a64dd4bc6232737724f3c043ac40))
+* correct the repository ([83adc7f](https://github.com/Greenstand/node-mapnik-1/commit/83adc7ff1d4c85bd7f059d63e61bd00c90952732))
+* solve the problem that the position of grid is inaccurate ([9ec4307](https://github.com/Greenstand/node-mapnik-1/commit/9ec430709c16a8ba227390562862bc7cd9b3390d))
+* use release_base ([bfbe545](https://github.com/Greenstand/node-mapnik-1/commit/bfbe5458672e9a12dde0fe6cef660660f4686f32))
+
+
+### Features
+
+* add demo client ([736aa31](https://github.com/Greenstand/node-mapnik-1/commit/736aa31fe55cf74f15a6c25b3bdc62f2b965c1d5))
+* can connect to local postgresql ([6e69590](https://github.com/Greenstand/node-mapnik-1/commit/6e695909cb33c3d6b52cef4927deb165e76086da))
+* can connect to real data(lat,lng) and render points ([388e35c](https://github.com/Greenstand/node-mapnik-1/commit/388e35cda4611b52e9c853121aa2976ec0cceddb))
+* can display dev db, real tree (almost) ([988e909](https://github.com/Greenstand/node-mapnik-1/commit/988e909a8bec2298bb35a4f06047299f8701b8b7))
+* can display drop icons ([d45c635](https://github.com/Greenstand/node-mapnik-1/commit/d45c635af014eef7361cf0b163781bc5cf47f6ee))
+* can display icon highlight ([ae42528](https://github.com/Greenstand/node-mapnik-1/commit/ae425281f885bf7e16a8679422ad14c7e23a61be))
+* can fetch data, display point on map ([a8c5056](https://github.com/Greenstand/node-mapnik-1/commit/a8c5056013b6d6009ef1a91d365def06d020c9c0))
+* can render grid ([f94d636](https://github.com/Greenstand/node-mapnik-1/commit/f94d63611c55bb13549e9cc2d2d6e0172eb0ed8d))
+* can render grid tile in express, and can click ([65911ea](https://github.com/Greenstand/node-mapnik-1/commit/65911ead587f422514af07f2a72be883fe8c9d0c))
+* can render static tile ([e68d899](https://github.com/Greenstand/node-mapnik-1/commit/e68d899e3b48189fa33f333f7dd85b64573d2e8d))
+* can reproduce the coordiate problem, use regualer point like: 0 0, 0 1, 1 0 to render on the map, can find the points on the map is irredular, do points on the map isn't even, although I know in mocarto it IS uneven, there are some point are cut when conjoint to another tile ([cc7ff71](https://github.com/Greenstand/node-mapnik-1/commit/cc7ff716e75e720c89ebb4ce2380343aee3be0fa))
+* can run the example, draw a world map ([3990f29](https://github.com/Greenstand/node-mapnik-1/commit/3990f2995f59562b30df80b845fafbad520d1a04))
+* can serve tile, but the coordinate is wrong ([7e57d4d](https://github.com/Greenstand/node-mapnik-1/commit/7e57d4d4a253a7e544791b0803cc15fbd6f68d93))
+* can show tile correctly, with correct coordinates ([6cd9b0f](https://github.com/Greenstand/node-mapnik-1/commit/6cd9b0fc5b94724d5f97d0adb2f2b896a8ddb2e9))
+* can show tree point from db, on tile server, but just case: xyz=0 0 0 is working, when zoom in the coordinates is wrong ([f9a1bd5](https://github.com/Greenstand/node-mapnik-1/commit/f9a1bd560a3c63bb92b66e5ba8efc06c9c942f60))
+* connect to real dev db ([35a1cb7](https://github.com/Greenstand/node-mapnik-1/commit/35a1cb7c16e3ff12a08b1a37f05b9342ef7d24f3))
+* create basic CD workflow ([4359dd1](https://github.com/Greenstand/node-mapnik-1/commit/4359dd19ef242ff375cc87fcf963e6a8e6b10d3f))
+* I think the coordinates stuff is correct now ([4b5a081](https://github.com/Greenstand/node-mapnik-1/commit/4b5a08115235cf644dc5ecc0537d00398c665d68))
+* server is on, can listen on 3000: npm run start, just simply respond a default image ([50102c9](https://github.com/Greenstand/node-mapnik-1/commit/50102c97637cccdbb6504fb566538103ba8810dc))
+* set memory limitaion ([f6d4a32](https://github.com/Greenstand/node-mapnik-1/commit/f6d4a327b7afa975a715820c1ad829c8a8768581))
+
 # Changelog
 
 ## 4.5.6

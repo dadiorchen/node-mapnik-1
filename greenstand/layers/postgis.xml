@@ -10,27 +10,10 @@
   <Parameter name="interactivity_fields">id</Parameter>
 </Parameters>
 
-<!--
-<Style name="style" opacity=".5" >
-    <Rule>
-        <PolygonSymbolizer fill="black" clip="false"/>
-    </Rule>
-</Style>
-
-<Layer name="world" >
-    <StyleName>style</StyleName>
-    <Datasource>
-        <Parameter name="file">data/world_merc.shp</Parameter>
-        <Parameter name="encoding">iso-8859-1</Parameter>
-        <Parameter name="type">shape</Parameter>
-    </Datasource>
-</Layer>
--->
-
 <Style name="layer0" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/pin_29px.png"
+      file="./pin_29px.png"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
@@ -54,7 +37,7 @@
        <Parameter name="type"><![CDATA[postgis]]></Parameter>
        <Parameter name="extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
        <Parameter name="max_size"><![CDATA[10]]></Parameter>
-       <Parameter name="table"><![CDATA[(SELECT * FROM trees) as cdbq]]></Parameter>
+       <Parameter name="table"><![CDATA[(SELECT * FROM trees WHERE active = true ORDER BY id DESC) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
     </Datasource>

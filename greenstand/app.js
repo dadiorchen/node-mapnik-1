@@ -23,6 +23,15 @@ log.warn("log level of mapnik:", mapnik.Logger.getSeverity());
 const app = express();
 app.use(cors());
 
+//viewer
+const viewer = path.join(__dirname, './examples/viewer');
+//app.get('/viewer', function(req, res) {
+//    res.sendFile(path.join(viewer, 'index.html'));
+//});
+app.use('/viewer', express.static(viewer));
+const images = path.join(__dirname, './examples/viewer/images');
+app.use('/viewer/images', express.static(images));
+
 app.get("/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
   const mercator = require('./sphericalmercator')
@@ -68,7 +77,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
         console.log("map.zoomAll:", map.zoomAll);
         console.log("map.zoomToBox:", map.zoomToBox);
         console.log("map.load:", map.load);
-        console.log("map.sacle:", map.scale());
+        console.log("map.scale:", map.scale());
         console.log("map.scaleDenominator:", map.scaleDenominator());
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
@@ -77,11 +86,6 @@ app.get("/:z/:x/:y.png", async (req, res) => {
       im.encode('png', function(err,buffer) {
         if (err) throw err;
         res(buffer);
-//        fs.writeFile('/tmp/test/tile.png',buffer, function(err) {
-//          if (err) throw err;
-//          console.log('saved map image to map.png');
-//          res();
-//        });
       });
     });
   });
@@ -97,7 +101,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise(async (res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     const xmlString = await getXMLString({
@@ -181,7 +185,7 @@ app.get("/freetown/:z/:x/:y.png", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.freetown.prod.xml');
 //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -239,7 +243,7 @@ app.get("/freetown/:z/:x/:y.grid.json", async (req, res) => {
   mapnik.register_default_input_plugins();
   const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
-    const define = path.join(__dirname, '../test/postgis.freetown.prod.xml');
+    const define = path.join(__dirname, './layers/postgis.freetown.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
     mapInstance.load(define, {strict: true},function(err,_map) {
@@ -299,16 +303,11 @@ app.get("/freetown/:z/:x/:y.grid.json", async (req, res) => {
   res.json(json);
 });
 
-//viewer
-const viewer = path.join(__dirname, './examples/viewer');
-app.get('/viewer', function(req, res) {
-    res.sendFile(path.join(viewer, 'index.html'));
-});
-app.use('/viewer', express.static(viewer));
 
 app.use("*", (_, res) => {
   res.status(200).send("Welcome to Greenstand tile server");
 });
+
 //app.use(async (_req, res) => {
 //  // register fonts and datasource plugins
 //  mapnik.register_default_fonts();
@@ -316,7 +315,7 @@ app.use("*", (_, res) => {
 //
 //  var map = new mapnik.Map(256*5, 256*5);
 //  const buffer = await new Promise((resolve, _rej) => {
-//    map.load('./test/postgis.xml', function(err,map) {
+//    map.load('./layers/postgis.xml', function(err,map) {
 //      if (err) throw err;
 //      //        expect(map).toHaveProperty("srs", "+init=epsg:3857");
 //      map.zoomAll();
