@@ -43,8 +43,15 @@ app.get("/:z/:x/:y.png", async (req, res) => {
     mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
     const define = path.join(__dirname, '../test/postgis.prod.xml');
     
+    const bboxDb = mercator.xyz_to_envelope_db(//x, y, z, false);
+          parseInt(x),
+          parseInt(y),
+          parseInt(z), false);
+    const bounds = bboxDb.join(",");
+    log.warn("bounds:", bounds);
     const xmlString = await getXMLString({
       zoomLevel: z,
+      bounds,
       ...req.query,
     });
 
@@ -104,8 +111,15 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
     const define = path.join(__dirname, './layers/postgis.prod.xml');
     //    const define = path.join(__dirname, 'stylesheet.xml');
     console.log("path:", define);
+    const bboxDb = mercator.xyz_to_envelope_db(//x, y, z, false);
+          parseInt(x),
+          parseInt(y),
+          parseInt(z), false);
+    const bounds = bboxDb.join(",");
+    log.warn("bounds:", bounds);
     const xmlString = await getXMLString({
       zoomLevel: z,
+      bounds,
       ...req.query,
     });
     mapInstance.fromString(xmlString, {

@@ -97,6 +97,7 @@ async function getXMLString(options){
     wallet,
     timeline,
     map_name,
+    bounds,
   } = options;
   const zoomLevelInt = parseInt(zoomLevel);
   let xmlTemplate;
@@ -113,6 +114,7 @@ async function getXMLString(options){
     wallet,
     timeline,
     map_name,
+    bounds,
   });
   const sql = await map.getQuery();
   log.warn("sql:", sql);
