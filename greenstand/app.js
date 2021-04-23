@@ -115,17 +115,16 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   log.warn("build map took:", Date.now() - begin, x,y,z,".grid");
   begin = Date.now();
   var grid = new mapnik.Grid(256, 256);
+  const fields = ["id", "latlon", "count", "type"];
+  if(parseInt(z) <= 9){
+    fileds.push("zoom_to");
+  }
   const json = await new Promise((res, _rej) => {
     map.render(
       grid, {
         layer:"l1", 
-        fields:[
-          'id', 
-          'latlon', 
-          'count', 
-          'type',
-          'zoom_to',
-        ]}, function(err, grid) {
+        fields,
+      }, function(err, grid) {
       if (err) throw err;
       console.log(grid);
       const json = grid.encodeSync({resolution: 4, features: true});
