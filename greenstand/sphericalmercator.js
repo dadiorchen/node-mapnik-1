@@ -98,4 +98,25 @@ SphericalMercator.prototype.xyz_to_envelope_db = function(x, y, zoom, TMS_SCHEME
     return bbox;
 };
 
+function clip(number){
+  return Math.min(Math.max(number, 0), 1024);
+}
+
+SphericalMercator.prototype.xyz_to_envelope_db_buffer = function(x, y, zoom, TMS_SCHEME, buffer) {
+    if (TMS_SCHEME) {
+        y = (Math.pow(2, zoom) - 1) - y;
+    }
+    var ll = [x * this.size , (y + 1) * this.size ];
+    var ur = [(x + 1) * this.size , y * this.size ];
+    console.warn("ll:", ll);
+    console.warn("ur:", ur);
+    ll = [clip(ll[0] - buffer), clip(ll[1] + buffer)];
+    ur = [clip(ur[0] + buffer), clip(ur[1] - buffer)];
+    console.warn("ll + buffer:", ll);
+    console.warn("ur + buffer:", ur);
+    var bbox = this.px_to_ll(ll, zoom).concat(this.px_to_ll(ur, zoom));
+    console.warn("bbox db:", bbox);
+    return bbox;
+};
+
 module.exports = new SphericalMercator();
