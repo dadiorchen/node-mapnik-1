@@ -99,7 +99,16 @@ SphericalMercator.prototype.xyz_to_envelope_db = function(x, y, zoom, TMS_SCHEME
 };
 
 function clip(number){
-  return Math.min(Math.max(number, 0), 1024);
+  return number;
+  //return Math.min(Math.max(number, 0), 1024);
+}
+
+function clipLat(lat){
+  return Math.min(Math.max(lat, -85.05112874735957), 85.05112874735957);
+}
+
+function clipLon(lon){
+  return Math.min(Math.max(lon, -180), 180);
 }
 
 SphericalMercator.prototype.xyz_to_envelope_db_buffer = function(x, y, zoom, TMS_SCHEME, buffer) {
@@ -110,11 +119,17 @@ SphericalMercator.prototype.xyz_to_envelope_db_buffer = function(x, y, zoom, TMS
     var ur = [(x + 1) * this.size , y * this.size ];
     console.warn("ll:", ll);
     console.warn("ur:", ur);
-    ll = [clip(ll[0] - buffer), clip(ll[1] + buffer)];
-    ur = [clip(ur[0] + buffer), clip(ur[1] - buffer)];
+    ll = [ll[0] - buffer, ll[1] + buffer];
+    ur = [ur[0] + buffer, ur[1] - buffer];
     console.warn("ll + buffer:", ll);
     console.warn("ur + buffer:", ur);
     var bbox = this.px_to_ll(ll, zoom).concat(this.px_to_ll(ur, zoom));
+    bbox = [
+      clipLon(bbox[0]), 
+      clipLat(bbox[1]),
+      clipLon(bbox[2]), 
+      clipLat(bbox[3]),
+    ]
     console.warn("bbox db:", bbox);
     return bbox;
 };
