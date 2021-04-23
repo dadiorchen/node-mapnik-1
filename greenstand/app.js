@@ -117,7 +117,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
   var grid = new mapnik.Grid(256, 256);
   const fields = ["id", "latlon", "count", "type"];
   if(parseInt(z) <= 9){
-    fileds.push("zoom_to");
+    fields.push("zoom_to");
   }
   const json = await new Promise((res, _rej) => {
     map.render(
