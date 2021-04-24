@@ -1,3 +1,18 @@
+# [4.10.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.9.1...v4.10.0) (2021-04-24)
+
+
+### Bug Fixes
+
+* clip ([7e33b9a](https://github.com/Greenstand/node-mapnik-1/commit/7e33b9ac35912091938c61622400c247781f2239))
+* edit sql with bounds which considers buffer ([cd6274c](https://github.com/Greenstand/node-mapnik-1/commit/cd6274c6a16df1a16895253cd888a28130f99fba))
+* typo ([e00a91d](https://github.com/Greenstand/node-mapnik-1/commit/e00a91d69ff94f4ac37f0e2dcea85d28ad6e3168))
+* wrong image icon path ([fab424a](https://github.com/Greenstand/node-mapnik-1/commit/fab424ac4a494ace7356997b2f98ed965e33b1d4))
+
+
+### Features
+
+* add bounds to sql ([f1db6ee](https://github.com/Greenstand/node-mapnik-1/commit/f1db6ee888987542009c4d7682095e7d6d955d6c))
+
 ## [4.9.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.9.0...v4.9.1) (2021-04-18)
 
 
