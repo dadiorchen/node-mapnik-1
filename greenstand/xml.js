@@ -134,7 +134,7 @@ const xmlTree =`
 <Style name="layer0" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/pin_29px.png"
+      file="../greenstand/images/pin_29px.png"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"

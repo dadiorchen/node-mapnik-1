@@ -68,12 +68,6 @@ class Map{
           this.sql.setBounds(this.bounds);
         }
       }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
-      }
-
     }else if(this.wallet){
       /*
        * wallet map mode
@@ -88,52 +82,6 @@ class Map{
         this.sql.addFilterByWallet(this.wallet);
         this.sql.setBounds(this.bounds);
       }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
-      }
-
-    }else if(this.flavor){
-      /*
-       * flavor map mode
-       */
-      if(this.zoomLevel > 15){
-        this.sql = new SQLCase2();
-        this.sql.setBounds(this.bounds);
-        this.sql.addFilterByFlavor(this.flavor);
-      }else{
-        this.sql = new SQLCase3();
-        this.sql.setZoomLevel(this.zoomLevel);
-        this.sql.addFilterByFlavor(this.flavor);
-        this.sql.setBounds(this.bounds);
-      }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
-      }
-
-    }else if(this.token){
-      /*
-       * Token map mode
-       */
-      if(this.zoomLevel > 15){
-        this.sql = new SQLCase2();
-        this.sql.setBounds(this.bounds);
-        this.sql.addFilterByToken(this.token);
-      }else{
-        this.sql = new SQLCase3();
-        this.sql.setZoomLevel(this.zoomLevel);
-        this.sql.addFilterByToken(this.token);
-        this.sql.setBounds(this.bounds);
-      }
-      if(this.zoomLevel <= 9){
-        this.sqlZoomTarget = new SQLZoomTargetCase1V2();
-        this.sqlZoomTarget.setBounds(this.bounds);
-        this.sqlZoomTarget.setZoomLevel(this.zoomLevel);
-      }
-
     }else if(this.mapName){
       /*
        * org map mode

@@ -43,6 +43,7 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     WHERE
       zoom_level = ${this.getZoomLevel()}
       ${this.getFilter()}
+      ${this.getBoundingBoxQuery()}
     GROUP BY
       region_id,
       zoom_level ) populated_region
@@ -59,6 +60,7 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     WHERE
       zoom_level = ${this.getZoomLevel() + 2}
       ${this.getFilter()}
+      ${this.getBoundingBoxQuery()}
     GROUP BY
       region_id,
       zoom_level,
@@ -67,7 +69,6 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     contained.centroid)
   WHERE
     TRUE
-    ${this.getBoundingBoxQuery()}
   ORDER BY
     region.id,
     total DESC
