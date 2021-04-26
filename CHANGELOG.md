@@ -1,3 +1,10 @@
+## [4.10.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.0...v4.10.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* change port back to 3000 ([e89f5b9](https://github.com/Greenstand/node-mapnik-1/commit/e89f5b9fcf46b7989345e8976c09b1c7b7a6d092))
+
 # [4.10.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.9.1...v4.10.0) (2021-04-24)
 
 
