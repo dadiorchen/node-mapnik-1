@@ -1,6 +1,12 @@
 const path = require("path");
 const fs = require("fs");
+const {xml, xmlTree} = require("./xml");
+const Map = require("./Map");
+const log = require("loglevel");
 
+/*
+ * setup the DB connection
+ */
 function replace(content){
   //       <Parameter name="user"><![CDATA[postgres]]></Parameter>
   //       <Parameter name="host"><![CDATA[172.17.0.2]]></Parameter>
@@ -84,4 +90,45 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-module.exports = {config, configFreetown};
+async function getXMLString(options){
+  const {
+    zoomLevel,
+    userid,
+    wallet,
+    timeline,
+    map_name,
+    bounds,
+  } = options;
+  const zoomLevelInt = parseInt(zoomLevel);
+  let xmlTemplate;
+  if(zoomLevelInt > 15){
+    xmlTemplate = xmlTree;
+  }else{
+    xmlTemplate = xml;
+  }
+  let xmlString = replace(xmlTemplate);
+  const map = new Map();
+  await map.init({
+    zoom_level: zoomLevelInt,
+    userid,
+    wallet,
+    timeline,
+    map_name,
+    bounds,
+  });
+  const sql = await map.getQuery();
+  log.warn("sql:", sql);
+
+  xmlString = xmlString.replace(
+    "select * from trees",
+    sql,
+  );
+  return xmlString;
+}
+
+module.exports = {
+  config, 
+  configFreetown, 
+  replace,
+  getXMLString,
+};

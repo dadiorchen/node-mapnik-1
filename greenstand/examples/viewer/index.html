@@ -33,15 +33,16 @@
 //		zoomOffset: -1
 	}).addTo(mymap);
 
-  var baseURL_def = "..";
-  new L.tileLayer(baseURL_def + '/{z}/{x}/{y}.png').addTo(mymap);
-  var utfGridLayer = new L.utfGrid(baseURL_def + '/{z}/{x}/{y}.grid.json');
+  var baseURL_def = "";
+  new L.tileLayer(baseURL_def + '/{z}/{x}/{y}.png' + window.location.search).addTo(mymap);
+  var utfGridLayer = new L.utfGrid(baseURL_def + '/{z}/{x}/{y}.grid.json' + window.location.search);
   utfGridLayer.on('click', function (e) {
     console.log("e:", e);
     if (e.data) {
       console.log('click', e.data);
 //      mymap.panTo(e.latlng);
-      mymap.setView(e.latlng, mymap.getZoom() + 2);
+      const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+      mymap.setView([lat, lon], mymap.getZoom() + 2);
     } else {
       console.log('click nothing');
     }
@@ -60,7 +61,8 @@
   });
   utfGridLayer.on('mouseover', function (e) {
     console.log("over e:", e);
-    marker = L.marker([e.data.lat, e.data.lon],{
+    const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
+    marker = L.marker([lat, lon],{
       icon: myIcon,
     });
     marker.addTo(mymap);

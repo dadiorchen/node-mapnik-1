@@ -1,3 +1,66 @@
+## [4.10.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.0...v4.10.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* change port back to 3000 ([e89f5b9](https://github.com/Greenstand/node-mapnik-1/commit/e89f5b9fcf46b7989345e8976c09b1c7b7a6d092))
+
+# [4.10.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.9.1...v4.10.0) (2021-04-24)
+
+
+### Bug Fixes
+
+* clip ([7e33b9a](https://github.com/Greenstand/node-mapnik-1/commit/7e33b9ac35912091938c61622400c247781f2239))
+* edit sql with bounds which considers buffer ([cd6274c](https://github.com/Greenstand/node-mapnik-1/commit/cd6274c6a16df1a16895253cd888a28130f99fba))
+* typo ([e00a91d](https://github.com/Greenstand/node-mapnik-1/commit/e00a91d69ff94f4ac37f0e2dcea85d28ad6e3168))
+* wrong image icon path ([fab424a](https://github.com/Greenstand/node-mapnik-1/commit/fab424ac4a494ace7356997b2f98ed965e33b1d4))
+
+
+### Features
+
+* add bounds to sql ([f1db6ee](https://github.com/Greenstand/node-mapnik-1/commit/f1db6ee888987542009c4d7682095e7d6d955d6c))
+
+## [4.9.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.9.0...v4.9.1) (2021-04-18)
+
+
+### Bug Fixes
+
+* force release ([581bbea](https://github.com/Greenstand/node-mapnik-1/commit/581bbea12e93431af614196a6f50514c8605d129))
+
+# [4.9.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.10...v4.9.0) (2021-04-16)
+
+
+### Bug Fixes
+
+* break on wallet tree layer ([7a44b21](https://github.com/Greenstand/node-mapnik-1/commit/7a44b21adaf63c2de0785770246eb5663a78e650))
+
+
+### Features
+
+* basic xml config ([e446599](https://github.com/Greenstand/node-mapnik-1/commit/e44659917a9444ec4f7c341052f5e44d86da2680))
+* building xmlString move to config.js ([cde0ea1](https://github.com/Greenstand/node-mapnik-1/commit/cde0ea1708eb37244e93f957eb576ca56bddac46))
+* can add zoom target ([3cd3e08](https://github.com/Greenstand/node-mapnik-1/commit/3cd3e089fbebce27dbafd175313a2dbbf10cdc99))
+* can display all level for normal map ([22cae28](https://github.com/Greenstand/node-mapnik-1/commit/22cae288b0f3b87151603138e8e241c917a580f4))
+* can format number with 'K', can display bigger circle ([2d76fc1](https://github.com/Greenstand/node-mapnik-1/commit/2d76fc18a81b6223465de2c0a4f05ab41cf58976))
+* can load setting by map/sql model ([1b71d29](https://github.com/Greenstand/node-mapnik-1/commit/1b71d29ee6d99ddc2bcb3aa237bee2f91766a519))
+* can read config from string ([ccc5447](https://github.com/Greenstand/node-mapnik-1/commit/ccc5447d14bc67bf5543e6ae8c4a8aa0b6a416b3))
+* can render cluster ([dc9c2fb](https://github.com/Greenstand/node-mapnik-1/commit/dc9c2fbd9ec047c65b1ae48824c93455a8a2e9cc))
+* can render number on cluster icon ([5f9629c](https://github.com/Greenstand/node-mapnik-1/commit/5f9629cd75e72c646d2a73b40419ea667959a265))
+* can render org tile ([96ac2b2](https://github.com/Greenstand/node-mapnik-1/commit/96ac2b2f81f96f6013abdeb81e512448280c6af9))
+* can return zoom_to ([ef5fa24](https://github.com/Greenstand/node-mapnik-1/commit/ef5fa24988768c0f3ccc85158207cacf6cbfcb94))
+* font improvment; ([3224a87](https://github.com/Greenstand/node-mapnik-1/commit/3224a87fe29176dd149b795c273af36562badafb))
+* font test passed ([aa6fc31](https://github.com/Greenstand/node-mapnik-1/commit/aa6fc31a2ab9bc77a4af67d657b5c15d8c346222))
+* now can display tree point with correct icon ([0fbcc5d](https://github.com/Greenstand/node-mapnik-1/commit/0fbcc5dd1f97638c6006c06da739600ff12df878))
+* use shieldsymbol to display icon; ([a9cac85](https://github.com/Greenstand/node-mapnik-1/commit/a9cac85317e5c3da65ee4cb15a7e9fac3631b5f6))
+* zoom target support org map ([86fcb45](https://github.com/Greenstand/node-mapnik-1/commit/86fcb45c40df5f518053cabd30d7bb7e25d2fba9))
+
+## [4.8.10](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.9...v4.8.10) (2021-04-01)
+
+
+### Bug Fixes
+
+* add order by to sql ([f703c68](https://github.com/Greenstand/node-mapnik-1/commit/f703c6809615553b51a698b2bd4d1a6a54d4fed1))
+
 ## [4.8.9](https://github.com/Greenstand/node-mapnik-1/compare/v4.8.8...v4.8.9) (2021-04-01)
 
 
