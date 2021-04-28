@@ -1,3 +1,12 @@
+## [4.10.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.1...v4.10.2) (2021-04-28)
+
+
+### Bug Fixes
+
+* scale test env to 4 replicas ([52304d2](https://github.com/Greenstand/node-mapnik-1/commit/52304d26bfbc183adcadfe362100c896f340b928))
+* scale test env to 4 replicas ([d82dd60](https://github.com/Greenstand/node-mapnik-1/commit/d82dd608caca32fa464f11857d340c7835c99f89))
+* update mapping to remove timeout for prod ([02926e8](https://github.com/Greenstand/node-mapnik-1/commit/02926e8e52d8b67c457e8f27ec960ec8f552f1ec))
+
 ## [4.10.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.0...v4.10.1) (2021-04-26)
 
 
