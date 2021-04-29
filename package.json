@@ -55,7 +55,7 @@
     "test": "tape test/*.test.js",
     "install": "node-pre-gyp install --fallback-to-build",
     "docs": "documentation build src/*.cpp src/mapnik_plugins.hpp --polyglot -o documentation -f html --github --name Mapnik",
-    "try": "jest",
+    "jest": "jest",
     "start": "node --max-old-space-size=1024 greenstand/server.js",
     "start-dev": "nodemon --max-old-space-size=1024 greenstand/server.js"
   },

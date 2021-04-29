@@ -173,7 +173,6 @@ describe("getXMLString", () => {
 
   });
 
-
-
 });
+
 
