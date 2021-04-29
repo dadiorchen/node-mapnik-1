@@ -1,8 +1,10 @@
 const path = require("path");
 const fs = require("fs");
-const {xml, xmlTree} = require("./xml");
+const {xml, xmlTree, xmlJson} = require("./xml");
 const Map = require("./Map");
 const log = require("loglevel");
+const { Pool} = require('pg');
+
 
 /*
  * setup the DB connection
@@ -119,10 +121,33 @@ async function getXMLString(options){
   const sql = await map.getQuery();
   log.warn("sql:", sql);
 
-  xmlString = xmlString.replace(
-    "select * from trees",
-    sql,
-  );
+  //handle geojson case
+  if(zoomLevelInt === 2){
+    log.warn("handle geojson...");
+    const pool = new Pool({ connectionString: process.env.DB_URL });
+    const result = await pool.query({
+      text: sql,
+      values:[]
+    });
+    log.warn("result:", result);
+    const points = result.rows.map(row => {
+      const coord = JSON.parse(row.latlon).coordinates;
+      const count = parseInt(row.count);
+      const {count_text} = row;
+      return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}"}}`
+    });
+    //{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}
+    const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
+    log.warn("json:", json);
+    xmlString = xmlJson.replace("json_data", json);
+    log.warn("xmlJson length:", xmlJson.length);
+    log.warn("xmlString:", xmlString);
+  }else{
+    xmlString = xmlString.replace(
+      "select * from trees",
+      sql,
+    );
+  }
   return xmlString;
 }
 

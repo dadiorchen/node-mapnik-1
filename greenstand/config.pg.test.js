@@ -276,11 +276,11 @@ describe("Json", () => {
 //        ...params,
       });
 
-      const {xmlJson} = require("./xml");
-      let xmlStringJson = xmlJson.replace("json_data", `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}`);
-      log.warn("xmlJson length:", xmlJson.length);
-      log.warn("xmlString:", xmlStringJson);
-      mapInstance.fromString(xmlStringJson, {
+//      const {xmlJson} = require("./xml");
+//      let xmlStringJson = xmlJson.replace("json_data", `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}`);
+//      log.warn("xmlJson length:", xmlJson.length);
+//      log.warn("xmlString:", xmlStringJson);
+      mapInstance.fromString(xmlString, {
         strict: true,
         base: __dirname,
       },function(err,_map) {
@@ -326,6 +326,6 @@ describe("Json", () => {
     });
     log.warn("render map took:", Date.now() - begin, x,y,z,".png");
     fs.writeFileSync('map.png',buffer);
-  });
+  }, 10000);
 });
 
