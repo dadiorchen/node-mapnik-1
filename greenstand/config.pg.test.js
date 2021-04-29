@@ -90,6 +90,15 @@ describe("Json", () => {
         values:[]
       });
     log.warn("result:", result);
+    const points = result.rows.map(row => {
+      const coord = JSON.parse(row.latlon).coordinates;
+      const count = parseInt(row.count);
+      const {count_text} = row;
+      return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}"}}`
+    });
+    //{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}
+    const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
+    log.warn("json:", json);
 
   }, 10000);
 
@@ -123,17 +132,19 @@ describe("Json", () => {
       );
       const bounds = bboxDb.join(",");
       log.warn("bounds:", bounds);
-//      const xmlString = await getXMLString({
-//        zoomLevel: z,
-//        bounds,
-////        ...params,
-//      });
+      const xmlString = await getXMLString({
+        zoomLevel: z,
+        bounds,
+//        ...params,
+      });
 
       const {xmlJson} = require("./xml");
+      let xmlStringJson = xmlJson.replace("json_data", `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}`);
       log.warn("xmlJson length:", xmlJson.length);
-      mapInstance.fromString(xml, {
-//        strict: true,
-//        base: __dirname,
+      log.warn("xmlString:", xmlStringJson);
+      mapInstance.fromString(xmlStringJson, {
+        strict: true,
+        base: __dirname,
       },function(err,_map) {
         if(err){
           console.error("e:", err); throw "failed"; 
@@ -176,13 +187,10 @@ describe("Json", () => {
       });
     });
     log.warn("render map took:", Date.now() - begin, x,y,z,".png");
-    fs.writeFileSync('./map.png',buffer, function(err) {
-      if (err) throw err;
-      console.log('saved map image to map.png');
-    });
+    fs.writeFileSync('map.png',buffer);
   });
 
-  it.only("", async () => {
+  it("original render way", async () => {
     const mapnik = require("../lib/mapnik");
     const mercator = require('./sphericalmercator')
     console.log("ok!");
@@ -230,6 +238,94 @@ describe("Json", () => {
       });
     });
     console.log("took:", Date.now() - begin);
+  });
+
+  it.only("Render one with real config function", async () => {
+    const mapnik = require("../lib/mapnik");
+    const path = require("path");
+    const log = require("loglevel");
+    const mercator = require('./sphericalmercator')
+    const z = 2;
+    const x = 1;
+    const y = 1;
+    //font
+    mapnik.register_default_fonts();
+    mapnik.register_default_input_plugins();
+    log.warn("fonts:", mapnik.fonts());
+    const mapInstance = new mapnik.Map(256, 256);
+    mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
+    log.warn("font instance:", mapInstance.fonts());
+    mapnik.Logger.setSeverity(mapnik.Logger.DEBUG);
+    log.warn("log level of mapnik:", mapnik.Logger.getSeverity());
+    const map = await new Promise(async (res, rej) => {
+      const mapInstance = new mapnik.Map(256, 256);
+      mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
+
+      const bboxDb = mercator.xyz_to_envelope_db_buffer(//x, y, z, false);
+        parseInt(x),
+        parseInt(y),
+        parseInt(z), 
+        false,
+        100,
+      );
+      const bounds = bboxDb.join(",");
+      log.warn("bounds:", bounds);
+      const xmlString = await getXMLString({
+        zoomLevel: z,
+        bounds,
+//        ...params,
+      });
+
+      const {xmlJson} = require("./xml");
+      let xmlStringJson = xmlJson.replace("json_data", `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}`);
+      log.warn("xmlJson length:", xmlJson.length);
+      log.warn("xmlString:", xmlStringJson);
+      mapInstance.fromString(xmlStringJson, {
+        strict: true,
+        base: __dirname,
+      },function(err,_map) {
+        if(err){
+          console.error("e:", err); throw "failed"; 
+        }
+//        if (options.bufferSize) { obj.bufferSize = options.bufferSize;
+//        }
+        res(_map); 
+      }); 
+    }); 
+    console.log("map:", map); 
+    console.log("x,y,z:",
+          x,y,z);
+    // bbox for x,y,z
+    const bbox = mercator.xyz_to_envelope(
+      //x, y, z, false); 
+      parseInt(x),
+      parseInt(y), parseInt(z), false);
+    console.log("bbox:", bbox);
+    //map.zoomAll();
+    map.extent = bbox;
+    console.log("map:", map);
+    console.log("map extent:", map.extent);
+    console.log("map.zoomAll:", map.zoomAll);
+    console.log("map.zoomToBox:", map.zoomToBox);
+    console.log("map.load:", map.load);
+    console.log("map.scale:", map.scale());
+    console.log("map.scaleDenominator:", map.scaleDenominator());
+
+    let begin = Date.now();
+    log.warn("build map took:", Date.now() - begin, x,y,z,".png");
+    begin = Date.now();
+    const im = new mapnik.Image(256, 256);
+    const buffer = await new Promise((res, rej) => {
+      map.render(im, function(err, im) {
+        if(err) throw err;
+        im.encode('png', function(err,buffer) {
+          if (err) throw err;
+          res(buffer);
+        });
+      });
+    });
+    log.warn("render map took:", Date.now() - begin, x,y,z,".png");
+    fs.writeFileSync('map.png',buffer);
   });
 });
 
