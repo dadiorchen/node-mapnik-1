@@ -382,7 +382,7 @@ const xmlJson = `
             />
         </Rule>
     </Style>
-<Layer name="layer" srs="+proj=longlat +datum=WGS84 +no_defs  <>">
+<Layer name="l1" srs="+proj=longlat +datum=WGS84 +no_defs  <>">
     <StyleName>layer0</StyleName>
     <Datasource>
         <Parameter name="type">geojson</Parameter>

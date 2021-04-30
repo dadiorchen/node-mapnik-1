@@ -326,6 +326,44 @@ describe("Json", () => {
     });
     log.warn("render map took:", Date.now() - begin, x,y,z,".png");
     fs.writeFileSync('map.png',buffer);
-  }, 10000);
+
+    //json
+    const grid = new mapnik.Grid(256, 256);
+    const fields = ["id", "latlon", "count", "type", "zoom_to"];
+    const json = await new Promise((res, _rej) => {
+      map.render(
+        grid, {
+          layer:"l1", 
+          fields,
+        }, function(err, grid) {
+        if (err) throw err;
+        console.log(grid);
+        const json = grid.encodeSync({resolution: 4, features: true});
+        res(json);
+      });
+    });
+    log.warn('map.json:',json);
+    
+  }, 15000);
+
+  it("get xml", done => {
+    Promise.all([
+      getXMLString({
+        zoomLevel: 2,
+      })
+        .then(xmlString => {
+          log.warn("got xml with length:", xmlString.length);
+        }),
+      getXMLString({
+        zoomLevel: 2,
+      })
+        .then(xmlString => {
+          log.warn("got xml with length:", xmlString.length);
+        })
+    ]).then(() => {
+      log.warn("finished");
+      done();
+    });
+  });
 });
 
