@@ -1,3 +1,10 @@
+# [4.12.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.11.0...v4.12.0) (2021-04-30)
+
+
+### Features
+
+* neast version ([99c05f3](https://github.com/Greenstand/node-mapnik-1/commit/99c05f3666c42da130d1854c800ed798504856f5))
+
 # [4.11.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.2...v4.11.0) (2021-04-30)
 
 
