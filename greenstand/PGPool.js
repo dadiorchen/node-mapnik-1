@@ -21,30 +21,37 @@ class PGPool{
     this.isFetching = false;
   }
 
-  fetch(sql, callback){
+  fetch(sql, handleResult, callback){
     log.warn("fetch");
     this.queue.push(callback);
     if(this.isFetching){
       log.warn("is fetching, queue");
     }else{
       this.isFetching = true;
+      const begin = Date.now();
       this.pool.query({
         text: sql,
         values:[]
       }).then(result => {
-        log.warn("get from db");
+        log.warn("get from db:%d, took time:%d", result.rows.length, Date.now() - begin);
+        const resultHandled = handleResult? handleResult(result):result;
         while(this.queue.length > 0){
           const cb = this.queue.pop();
-          cb(result);
+          cb(resultHandled);
         }
-        this.cache.set(sql,result);
+        this.cache.set(sql,resultHandled);
         this.isFetching = false;
         log.warn("fetch finished");
       });
     }
   }
 
-  getQuery(sql){
+  /*
+   * handleResult to manipulate the result , here 
+   * is translate the result of db rows to mapnik
+   * xml config
+   */
+  getQuery(sql, handleResult){
     log.info("get query");
     return new Promise((res, rej) => {
       const value = this.cache.get(sql);
@@ -53,7 +60,7 @@ class PGPool{
         //TODO expire the cache
         res(value);
       }else{
-        this.fetch(sql,(result)=>{
+        this.fetch(sql, handleResult, (result)=>{
           log.warn("fetch callback");
           res(result);
         });

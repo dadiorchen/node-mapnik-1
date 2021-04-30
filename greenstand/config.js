@@ -104,7 +104,7 @@ async function getXMLString(options){
     bounds,
   } = options;
   const zoomLevelInt = parseInt(zoomLevel);
-  const isJson = zoomLevelInt === 2? true: false;
+  const isJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
   let xmlTemplate;
   if(zoomLevelInt > 15){
     xmlTemplate = xmlTree;
@@ -127,21 +127,22 @@ async function getXMLString(options){
   //handle geojson case
   if(isJson){
     log.warn("handle geojson...");
-    const result = await pgPool.getQuery(sql);
-    log.info("result:", result);
-    const points = result.rows.map(row => {
-      const coord = JSON.parse(row.latlon).coordinates;
-      const count = parseInt(row.count);
-      const {count_text, id, latlon, type, zoom_to} = row;
-      return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
+    xmlString = await pgPool.getQuery(sql, (result) => {
+      log.info("result:", result);
+      const points = result.rows.map(row => {
+        const coord = JSON.parse(row.latlon).coordinates;
+        const count = parseInt(row.count);
+        const {count_text, id, latlon, type, zoom_to} = row;
+        return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
+      });
+      //{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}
+      const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
+      log.debug("json:", json);
+      const resultHandled = xmlJson.replace("json_data", json);
+      return resultHandled;
     });
-    //{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}
-    const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
-    console.error("xxxx:", json);
-    log.debug("json:", json);
-    xmlString = xmlJson.replace("json_data", json);
     log.warn("xmlJson length:", xmlJson.length);
-    log.warn("xmlString:", xmlString);
+    log.debug("xmlString:", xmlString);
   }else{
     xmlString = xmlString.replace(
       "select * from trees",

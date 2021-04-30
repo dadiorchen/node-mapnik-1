@@ -188,7 +188,7 @@ describe("Json", () => {
     });
     log.warn("render map took:", Date.now() - begin, x,y,z,".png");
     fs.writeFileSync('map.png',buffer);
-  });
+  }, 1000* 30);
 
   it("original render way", async () => {
     const mapnik = require("../lib/mapnik");

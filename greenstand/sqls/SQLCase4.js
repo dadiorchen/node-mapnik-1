@@ -33,7 +33,8 @@ class SQLCase4{
           CASE WHEN count > 1000 
           THEN  (count / 1000) || 'K'
           ELSE count || ''
-          END AS count_text
+          END AS count_text,
+          NULL as zoom_to
           FROM clusters
           WHERE zoom_level = 14 
           ${this.getBoundingBoxQuery()}
