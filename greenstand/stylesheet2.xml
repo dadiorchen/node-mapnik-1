@@ -43,13 +43,7 @@
         <StyleName>points</StyleName>
         <Datasource>
             <Parameter name="type">geojson</Parameter>
-            <Parameter name="file">./trees.json</Parameter>
-            <!--
-            <Parameter name="inline"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[0,80]}},{"type":"Feature","geometry":{"type":"Point","coordinates":[100,0]}}]}]]></Parameter>
-            -->
-            <!--
-            <Parameter name="inline"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"MultiPoint","coordinates":[[0,0], [100,20], [1,0],[-90, -10]]},"properties":{"marker-color":"7e7e7e","marker-size":"medium","symbol":"-","name":"Dinagat Islands","marker-path":"/pin_29px.png"}}]}]]></Parameter>
-            -->
+            <Parameter name="inline"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]}}]}]]></Parameter>
         </Datasource>
     </Layer>
 

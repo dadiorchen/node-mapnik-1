@@ -1,8 +1,15 @@
 const path = require("path");
 const fs = require("fs");
-const {xml, xmlTree} = require("./xml");
+const {xml, xmlTree, xmlJson} = require("./xml");
 const Map = require("./Map");
 const log = require("loglevel");
+const PGPool = require("./PGPool");
+
+const pgPool = new PGPool({
+  cacheSize: parseInt(process.env.CACHE_SIZE),
+  cacheExpire: parseInt(process.env.CACHE_EXPIRE),
+});
+
 
 /*
  * setup the DB connection
@@ -100,6 +107,7 @@ async function getXMLString(options){
     bounds,
   } = options;
   const zoomLevelInt = parseInt(zoomLevel);
+  const isJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
   let xmlTemplate;
   if(zoomLevelInt > 15){
     xmlTemplate = xmlTree;
@@ -114,15 +122,35 @@ async function getXMLString(options){
     wallet,
     timeline,
     map_name,
-    bounds,
+    bounds: isJson?undefined: bounds,//json mode do not need bounds
   });
   const sql = await map.getQuery();
   log.warn("sql:", sql);
 
-  xmlString = xmlString.replace(
-    "select * from trees",
-    sql,
-  );
+  //handle geojson case
+  if(isJson){
+    log.warn("handle geojson...");
+    xmlString = await pgPool.getQuery(sql, (result) => {
+      log.info("result:", result);
+      const points = result.rows.map(row => {
+        const coord = JSON.parse(row.latlon).coordinates;
+        const count = parseInt(row.count);
+        const {count_text, id, latlon, type, zoom_to} = row;
+        return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
+      });
+      const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
+      log.debug("json:", json);
+      const resultHandled = xmlJson.replace("json_data", json);
+      return resultHandled;
+    });
+    log.warn("xmlJson length:", xmlJson.length);
+    log.debug("xmlString:", xmlString);
+  }else{
+    xmlString = xmlString.replace(
+      "select * from trees",
+      sql,
+    );
+  }
   return xmlString;
 }
 

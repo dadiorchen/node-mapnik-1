@@ -38,10 +38,12 @@
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.x",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "expect-runtime": "^0.10.1",
     "express": "^4.17.1",
     "jest": "^26.6.3",
     "loglevel": "^1.7.1",
+    "lru-cache": "^6.0.0",
     "mapnik-vector-tile": "3.0.1",
     "node-addon-api": "~3.1.x"
   },
@@ -55,7 +57,7 @@
     "test": "tape test/*.test.js",
     "install": "node-pre-gyp install --fallback-to-build",
     "docs": "documentation build src/*.cpp src/mapnik_plugins.hpp --polyglot -o documentation -f html --github --name Mapnik",
-    "try": "jest",
+    "jest": "jest",
     "start": "node --max-old-space-size=1024 greenstand/server.js",
     "start-dev": "nodemon --max-old-space-size=1024 greenstand/server.js"
   },
