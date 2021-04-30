@@ -5,7 +5,10 @@ const Map = require("./Map");
 const log = require("loglevel");
 const PGPool = require("./PGPool");
 
-const pgPool = new PGPool();
+const pgPool = new PGPool({
+  cacheSize: parseInt(process.env.CACHE_SIZE),
+  cacheExpire: parseInt(process.env.CACHE_EXPIRE),
+});
 
 
 /*
@@ -135,7 +138,6 @@ async function getXMLString(options){
         const {count_text, id, latlon, type, zoom_to} = row;
         return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
       });
-      //{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,10]},"properties":{"count":1, "count_text":"1"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-10,20]},"properties":{"count":1, "count_text":"1"}}]}
       const json = `{"type":"FeatureCollection","features":[${points.join(",")}]}`;
       log.debug("json:", json);
       const resultHandled = xmlJson.replace("json_data", json);
