@@ -1,3 +1,16 @@
+# [4.11.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.2...v4.11.0) (2021-04-30)
+
+
+### Features
+
+* add dotenv ([e8828ce](https://github.com/Greenstand/node-mapnik-1/commit/e8828ce5151b9291e8ea1732cb7484bb20219195))
+* add LRU ([db45e88](https://github.com/Greenstand/node-mapnik-1/commit/db45e88119d05aa1790f537f60aee54a501ca801))
+* can compose the geojson by result got from DB ([66fa47f](https://github.com/Greenstand/node-mapnik-1/commit/66fa47f84f1d57b7bbe6d226624cd3d8a7deb7dd))
+* can render all layers; now is caching xml config string ([27026e2](https://github.com/Greenstand/node-mapnik-1/commit/27026e2ace9bf4a3572989fc1254fc49fc27ebd2))
+* can render by json, just restore the previous way to render it by load xml, and inline json data ([8326783](https://github.com/Greenstand/node-mapnik-1/commit/8326783c3b42425d0d40063cb6e15521ce321bc6))
+* can render png on zoom level 2 ([6bfa46e](https://github.com/Greenstand/node-mapnik-1/commit/6bfa46e826a21504236bf699ac64157a8c9e6602))
+* pgPool; can render png, json ([ff109d9](https://github.com/Greenstand/node-mapnik-1/commit/ff109d9f530ec3301cbc9577cec3113a42065710))
+
 ## [4.10.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.10.1...v4.10.2) (2021-04-28)
 
 
