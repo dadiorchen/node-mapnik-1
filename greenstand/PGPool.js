@@ -1,10 +1,21 @@
 const { Pool} = require('pg');
 const log = require("loglevel");
+const LRU = require("lru-cache");
 
 class PGPool{
-
-  constructor(){
-    this.cache = {};
+  
+  /*
+   * Options:
+   *  cacheSize: the size of the LRU cache
+   *  cacheExpire: the time to expire
+   */
+  constructor(options){
+    this.options = {
+      ...{ cacheSize: 10000, cacheExpire: 1000 * 60 * 4, }, ...options, };
+    log.warn("set the pg pool by:", this.options); this.cache = new LRU({
+      max: this.options.cacheSize,
+      maxAge: this.options.cacheExpire,
+    });
     this.pool = new Pool({ connectionString: process.env.DB_URL });
     this.queue = [];
     this.isFetching = false;
@@ -26,7 +37,7 @@ class PGPool{
           const cb = this.queue.pop();
           cb(result);
         }
-        this.cache[sql] = result;
+        this.cache.set(sql,result);
         this.isFetching = false;
         log.warn("fetch finished");
       });
@@ -36,10 +47,11 @@ class PGPool{
   getQuery(sql){
     log.info("get query");
     return new Promise((res, rej) => {
-      if(this.cache[sql]){
+      const value = this.cache.get(sql);
+      if(value){
         log.warn("cache bingo!");
         //TODO expire the cache
-        res(this.cache[sql]);
+        res(value);
       }else{
         this.fetch(sql,(result)=>{
           log.warn("fetch callback");
@@ -47,6 +59,15 @@ class PGPool{
         });
       }
     });
+  }
+
+  hasCached(sql){
+    const value = this.cache.get(sql);
+    if(value){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
 
