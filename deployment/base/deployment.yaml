@@ -21,11 +21,11 @@ spec:
             - containerPort: 80
           env:
             - name: PORT
-              value: 3000
+              value: "3000"
             - name: CACHE_SIZE
-              value: 10000
+              value: "10000"
             - name: CACHE_EXPIRE
-              value: 240000
+              value: "240000"
             - name: DB_URL
               valueFrom:
                 secretKeyRef:
