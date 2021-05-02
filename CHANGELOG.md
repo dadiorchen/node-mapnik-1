@@ -1,3 +1,10 @@
+## [4.12.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.0...v4.12.1) (2021-05-02)
+
+
+### Bug Fixes
+
+* update database connection string to use no-verify ([60b1e66](https://github.com/Greenstand/node-mapnik-1/commit/60b1e6668933aa9d3ddffb2873fdcc6224db5551))
+
 # [4.12.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.11.0...v4.12.0) (2021-04-30)
 
 
