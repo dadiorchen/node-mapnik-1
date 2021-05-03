@@ -1,3 +1,10 @@
+## [4.12.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.1...v4.12.2) (2021-05-03)
+
+
+### Bug Fixes
+
+* bug in PGPool ([cd4067c](https://github.com/Greenstand/node-mapnik-1/commit/cd4067caf4a19d4678a286446a33d4a691b1706b))
+
 ## [4.12.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.0...v4.12.1) (2021-05-02)
 
 
