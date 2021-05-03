@@ -107,7 +107,7 @@ async function getXMLString(options){
     bounds,
   } = options;
   const zoomLevelInt = parseInt(zoomLevel);
-  const isJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
+  const isJson = (zoomLevelInt >= 1 && zoomLevelInt <= 6) ? true: false;
   let xmlTemplate;
   if(zoomLevelInt > 15){
     xmlTemplate = xmlTree;

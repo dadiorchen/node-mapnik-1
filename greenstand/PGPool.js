@@ -17,17 +17,22 @@ class PGPool{
       maxAge: this.options.cacheExpire,
     });
     this.pool = new Pool({ connectionString: process.env.DB_URL });
-    this.queue = [];
-    this.isFetching = false;
+    this.queue = {
+    };
+    this.isFetching = {
+    };
   }
 
   fetch(sql, handleResult, callback){
     log.warn("fetch");
-    this.queue.push(callback);
-    if(this.isFetching){
+    if(!this.queue[sql]){
+      this.queue[sql] = [];
+    }
+    this.queue[sql].push(callback);
+    if(this.isFetching[sql]){
       log.warn("is fetching, queue");
     }else{
-      this.isFetching = true;
+      this.isFetching[sql] = true;
       const begin = Date.now();
       this.pool.query({
         text: sql,
@@ -35,13 +40,15 @@ class PGPool{
       }).then(result => {
         log.warn("get from db:%d, took time:%d", result.rows.length, Date.now() - begin);
         const resultHandled = handleResult? handleResult(result):result;
-        while(this.queue.length > 0){
-          const cb = this.queue.pop();
+        while(this.queue[sql].length > 0){
+          const cb = this.queue[sql].pop();
           cb(resultHandled);
         }
         this.cache.set(sql,resultHandled);
-        this.isFetching = false;
+        this.isFetching[sql] = false;
         log.warn("fetch finished");
+      }).catch(e => {
+        log.error("get error when query db:", e);
       });
     }
   }
@@ -57,7 +64,6 @@ class PGPool{
       const value = this.cache.get(sql);
       if(value){
         log.warn("cache bingo!");
-        //TODO expire the cache
         res(value);
       }else{
         this.fetch(sql, handleResult, (result)=>{
