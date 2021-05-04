@@ -8,6 +8,7 @@ const {Config} = require("./config");
 
 const pool = new Pool({ 
   connectionString: process.env.DB_URL,
+  max: 30,
 });
 
 const config = new Config(pool);
