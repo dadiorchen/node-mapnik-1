@@ -5,10 +5,6 @@ const Map = require("./Map");
 const log = require("loglevel");
 const PGPool = require("./PGPool");
 
-const pgPool = new PGPool({
-  cacheSize: parseInt(process.env.CACHE_SIZE),
-  cacheExpire: parseInt(process.env.CACHE_EXPIRE),
-});
 
 
 /*
@@ -97,71 +93,86 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-async function getXMLString(options){
-  const {
-    zoomLevel,
-    userid,
-    wallet,
-    timeline,
-    map_name,
-    bounds,
-  } = options;
-  const zoomLevelInt = parseInt(zoomLevel);
-  const useGeoJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
-  const useBounds = zoomLevelInt > 6;
-  let xmlTemplate;
-  if(zoomLevelInt > 15){
-    xmlTemplate = xmlTree;
-  }else{
-    xmlTemplate = xml;
-  }
-  let xmlString = replace(xmlTemplate);
-  const map = new Map();
-  await map.init({
-    zoom_level: zoomLevelInt,
-    userid,
-    wallet,
-    timeline,
-    map_name,
-    bounds: useBounds? bounds: undefined,//json mode do not need bounds
-  });
-  const sql = await map.getQuery();
-  log.warn("sql:", sql);
 
-  //handle geojson case
-  if(useGeoJson){
-    log.warn("handle geojson...");
-    xmlString = await pgPool.getQuery(sql, (result) => {
-      log.info("result:", result);
-      const points = result.rows.map(row => {
-        const coord = JSON.parse(row.latlon).coordinates;
-        const count = parseInt(row.count);
-        const {count_text, id, latlon, type, zoom_to} = row;
-        return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
-      });
-      const json = points.length > 0? 
-        `{"type":"FeatureCollection","features":[${points.join(",")}]}`
-      :
-        `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":
-{"type":"Point","coordinates": [85,0]},"properties":{"count":1, "count_text": "1", "id": 99999, "latlon": {"type":"Point","coordinates":[85,0]}, "type": "cluster", "zoom_to": null}}]}`;
-      log.debug("json:", json);
-      const resultHandled = xmlJson.replace("json_data", json);
-      return resultHandled;
+class Config {
+  constructor(pool){
+    this.pool = pool;
+    const pgPool = new PGPool({
+      cacheSize: parseInt(process.env.CACHE_SIZE),
+      cacheExpire: parseInt(process.env.CACHE_EXPIRE),
+      pool,
     });
-    log.warn("xmlJson length:", xmlJson.length);
-    log.warn("xmlString:", xmlString);
-  }else{
-    xmlString = xmlString.replace(
-      "select * from trees",
-      sql,
-    );
+    this.pgPool = pgPool;
   }
-  return xmlString;
+
+  async getXMLString(options){
+    const {
+      zoomLevel,
+      userid,
+      wallet,
+      timeline,
+      map_name,
+      bounds,
+    } = options;
+    const zoomLevelInt = parseInt(zoomLevel);
+    const useGeoJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
+    const useBounds = zoomLevelInt > 6;
+    let xmlTemplate;
+    if(zoomLevelInt > 15){
+      xmlTemplate = xmlTree;
+    }else{
+      xmlTemplate = xml;
+    }
+    let xmlString = replace(xmlTemplate);
+    const map = new Map(this.pool);
+    await map.init({
+      zoom_level: zoomLevelInt,
+      userid,
+      wallet,
+      timeline,
+      map_name,
+      bounds: useBounds? bounds: undefined,//json mode do not need bounds
+    });
+    const sql = await map.getQuery();
+    log.warn("sql:", sql);
+
+    //handle geojson case
+    if(useGeoJson){
+      log.warn("handle geojson...");
+      xmlString = await this.pgPool.getQuery(sql, (result) => {
+        log.info("result:", result);
+        const points = result.rows.map(row => {
+          const coord = JSON.parse(row.latlon).coordinates;
+          const count = parseInt(row.count);
+          const {count_text, id, latlon, type, zoom_to} = row;
+          return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
+        });
+        const json = points.length > 0? 
+          `{"type":"FeatureCollection","features":[${points.join(",")}]}`
+        :
+          `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":
+  {"type":"Point","coordinates": [85,0]},"properties":{"count":1, "count_text": "1", "id": 99999, "latlon": {"type":"Point","coordinates":[85,0]}, "type": "cluster", "zoom_to": null}}]}`;
+        log.debug("json:", json);
+        const resultHandled = xmlJson.replace("json_data", json);
+        return resultHandled;
+      });
+      log.warn("xmlJson length:", xmlJson.length);
+      log.warn("xmlString:", xmlString);
+    }else{
+      xmlString = xmlString.replace(
+        "select * from trees",
+        sql,
+      );
+    }
+    return xmlString;
+  }
+
+
 }
 
 module.exports = {
   config, 
   configFreetown, 
   replace,
-  getXMLString,
+  Config,
 };

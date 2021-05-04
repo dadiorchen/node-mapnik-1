@@ -3,9 +3,14 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
-const {getXMLString} = require("./config");
-const fs = require("fs");
-const {setSql} = require("./utils");
+const { Pool} = require('pg');
+const {Config} = require("./config");
+
+const pool = new Pool({ 
+  connectionString: process.env.DB_URL,
+});
+
+const config = new Config(pool);
 
 
 //font
@@ -46,7 +51,7 @@ async function buildMapInstance(x, y, z, params){
     );
     const bounds = bboxDb.join(",");
     log.warn("bounds:", bounds);
-    const xmlString = await getXMLString({
+    const xmlString = await config.getXMLString({
       zoomLevel: z,
       bounds,
       ...params,

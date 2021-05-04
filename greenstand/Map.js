@@ -1,5 +1,4 @@
 const log = require("loglevel");
-const { Pool} = require('pg');
 const SQLCase2 = require("./sqls/SQLCase2");
 const SQLCase2Timeline = require("./sqls/SQLCase2Timeline");
 const SQLCase1 = require("./sqls/SQLCase1");
@@ -12,8 +11,8 @@ const SQLZoomTargetCase1V2 = require("./sqls/SQLZoomTargetCase1V2");
 
 
 class Map{
-  constructor(){
-    this.pool = new Pool({ connectionString: process.env.DB_URL });
+  constructor(pool){
+    this.pool = pool;
   }
 
   async init(settings){
