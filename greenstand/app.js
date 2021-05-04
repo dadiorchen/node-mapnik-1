@@ -3,9 +3,18 @@ const mapnik = require("../lib/mapnik");
 const path = require("path");
 const log = require("loglevel");
 const cors = require("cors");
-const {getXMLString} = require("./config");
-const fs = require("fs");
-const {setSql} = require("./utils");
+const { Pool} = require('pg');
+const {Config} = require("./config");
+
+const connectionString = process.env.DB_URL;
+const max = process.env.PG_POOL_SIZE && parseInt(process.env.PG_POOL_SIZE) || 10;
+log.warn("pool settings:db:%s; pool size: %d", connectionString, max);
+const pool = new Pool({ 
+  connectionString,
+  max,
+});
+
+const config = new Config(pool);
 
 
 //font
@@ -46,7 +55,7 @@ async function buildMapInstance(x, y, z, params){
     );
     const bounds = bboxDb.join(",");
     log.warn("bounds:", bounds);
-    const xmlString = await getXMLString({
+    const xmlString = await config.getXMLString({
       zoomLevel: z,
       bounds,
       ...params,
@@ -88,10 +97,10 @@ async function buildMapInstance(x, y, z, params){
 
 app.get("/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
-  let begin = Date.now();
+  const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("build map took:", Date.now() - begin, x,y,z,".png");
-  begin = Date.now();
+  log.warn("Build map took:", Date.now() - begin, x,y,z,".png");
+  const begin2 = Date.now();
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
     map.render(im, function(err, im) {
@@ -102,7 +111,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
       });
     });
   });
-  log.warn("render map took:", Date.now() - begin, x,y,z,".png");
+  log.warn("Render map took:", Date.now() - begin2, x,y,z,".png");
   res.set({'Content-Type': 'image/png'});
   res.end(buffer);
 
@@ -110,10 +119,10 @@ app.get("/:z/:x/:y.png", async (req, res) => {
 
 app.get("/:z/:x/:y.grid.json", async (req, res) => {
   const {x,y,z} = req.params;
-  let begin = Date.now();
+  const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("build map took:", Date.now() - begin, x,y,z,".grid");
-  begin = Date.now();
+  log.warn("Build map took:", Date.now() - begin, x,y,z,".grid");
+  const begin2 = Date.now();
   var grid = new mapnik.Grid(256, 256);
   const fields = ["id", "latlon", "count", "type"];
   if(parseInt(z) <= 9){
@@ -131,7 +140,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
       res(json);
     });
   });
-  log.warn("render map took:", Date.now() - begin, x,y,z,".grid");
+  log.warn("Render map took:", Date.now() - begin2, x,y,z,".grid");
   res.set({'Content-Type': 'application/json'});
   res.json(json);
 });

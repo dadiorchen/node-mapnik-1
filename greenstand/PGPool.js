@@ -1,4 +1,3 @@
-const { Pool} = require('pg');
 const log = require("loglevel");
 const LRU = require("lru-cache");
 
@@ -16,7 +15,7 @@ class PGPool{
       max: this.options.cacheSize,
       maxAge: this.options.cacheExpire,
     });
-    this.pool = new Pool({ connectionString: process.env.DB_URL });
+    this.pool = this.options.pool;
     this.queue = {
     };
     this.isFetching = {
