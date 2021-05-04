@@ -88,10 +88,10 @@ async function buildMapInstance(x, y, z, params){
 
 app.get("/:z/:x/:y.png", async (req, res) => {
   const {x,y,z} = req.params;
-  let begin = Date.now();
+  const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("build map took:", Date.now() - begin, x,y,z,".png");
-  begin = Date.now();
+  log.warn("Build map took:", Date.now() - begin, x,y,z,".png");
+  const begin2 = Date.now();
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
     map.render(im, function(err, im) {
@@ -102,7 +102,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
       });
     });
   });
-  log.warn("render map took:", Date.now() - begin, x,y,z,".png");
+  log.warn("Render map took:", Date.now() - begin2, x,y,z,".png");
   res.set({'Content-Type': 'image/png'});
   res.end(buffer);
 
@@ -110,10 +110,10 @@ app.get("/:z/:x/:y.png", async (req, res) => {
 
 app.get("/:z/:x/:y.grid.json", async (req, res) => {
   const {x,y,z} = req.params;
-  let begin = Date.now();
+  const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("build map took:", Date.now() - begin, x,y,z,".grid");
-  begin = Date.now();
+  log.warn("Build map took:", Date.now() - begin, x,y,z,".grid");
+  const begin2 = Date.now();
   var grid = new mapnik.Grid(256, 256);
   const fields = ["id", "latlon", "count", "type"];
   if(parseInt(z) <= 9){
@@ -131,7 +131,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
       res(json);
     });
   });
-  log.warn("render map took:", Date.now() - begin, x,y,z,".grid");
+  log.warn("Render map took:", Date.now() - begin2, x,y,z,".grid");
   res.set({'Content-Type': 'application/json'});
   res.json(json);
 });
