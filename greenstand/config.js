@@ -157,7 +157,7 @@ class Config {
         return resultHandled;
       });
       log.warn("xmlJson length:", xmlJson.length);
-      log.warn("xmlString:", xmlString);
+      log.debug("xmlString:", xmlString);
     }else{
       xmlString = xmlString.replace(
         "select * from trees",
