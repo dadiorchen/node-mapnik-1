@@ -1,3 +1,13 @@
+# [4.13.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.2...v4.13.0) (2021-05-04)
+
+
+### Features
+
+* add env var for max pool size ([ee868b8](https://github.com/Greenstand/node-mapnik-1/commit/ee868b8b77e2adc044e933d4d8b73cecfa8e0088))
+* can use PGPool render all cluster, with bounds ([6c3e4f5](https://github.com/Greenstand/node-mapnik-1/commit/6c3e4f591e09cbc5681ebc4e2e5b3beff1dd3109))
+* pool is working ([e5f9763](https://github.com/Greenstand/node-mapnik-1/commit/e5f9763c77f837f14892cc35715a79986543911a))
+* refactor config with pool param ([30d4bac](https://github.com/Greenstand/node-mapnik-1/commit/30d4bacffa3069612cc72445a459e0eeabbe26cf))
+
 ## [4.12.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.1...v4.12.2) (2021-05-03)
 
 
