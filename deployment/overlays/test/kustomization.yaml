@@ -3,3 +3,4 @@ bases:
 patchesStrategicMerge:
   - mapping.yaml
   - database-connection-sealed-secret.yaml
+  - deployment.yaml
