@@ -147,7 +147,8 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 
 
 app.use("*", (_, res) => {
-  res.status(200).send("Welcome to Greenstand tile server");
+  var pjson = require('../package.json');
+  res.status(200).send(`Welcome to Greenstand tile server, version:${pjson.version}`);
 });
 
 module.exports = app;
