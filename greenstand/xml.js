@@ -190,104 +190,6 @@ const xmlTree =`
 </Map>
 `;
 
-const xmlJsonB = `
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE Map[]>
-<Map font-directory="../test/data/map-a/" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs" maximum-extent="-20037508.3,-20037508.3,20037508.3,20037508.3" buffer-size="100">
-
-<Parameters>
-  <Parameter name="maximum-extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
-  <Parameter name="format">png</Parameter>
-  <Parameter name="markers_symbolizer_caches_disabled"><![CDATA[false]]></Parameter>
-  <Parameter name="interactivity_layer">layer0</Parameter>
-  <Parameter name="interactivity_fields">id</Parameter>
-</Parameters>
-
-<!--
-<Style name="style" opacity=".5" >
-    <Rule>
-        <PolygonSymbolizer fill="black" clip="false"/>
-    </Rule>
-</Style>
-
-<Layer name="world" >
-    <StyleName>style</StyleName>
-    <Datasource>
-        <Parameter name="file">data/world_merc.shp</Parameter>
-        <Parameter name="encoding">iso-8859-1</Parameter>
-        <Parameter name="type">shape</Parameter>
-    </Datasource>
-</Layer>
--->
-
-<Style name="layer1" filter-mode="first" >
-  <Rule>
-    <PointSymbolizer
-      file="../greenstand/images/cluster_46px.png"
-      opacity="1.0"
-      allow-overlap="true"
-      ignore-placement="true"
-      />
-    <TextSymbolizer
-      face-name="DejaVu Serif Condensed Bold Italic" 
-      fill="black" 
-      allow-overlap="true"
-      size="14"
-    >
-      [count]
-  </TextSymbolizer>
-    <!--
-    <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
-    -->
-  </Rule>
-</Style>
-<Style name="layer0" filter-mode="first" >
-  <Rule>
-    <Filter>[count] &lt;= 1000 </Filter>
-    <ShieldSymbolizer
-        face-name="Roboto Regular" 
-        size="14" 
-        fill="black"
-        file="../greenstand/images/cluster_46px.png" 
-        spacing="0" 
-        allow-overlap="true"
-    >
-      [count_text]
-    </ShieldSymbolizer>
-  </Rule>
-  <Rule>
-    <Filter>[count] &gt; 1000 </Filter>
-    <ShieldSymbolizer
-        face-name="Roboto Regular" 
-        size="14" 
-        fill="black"
-        file="../greenstand/images/cluster_63px.png" 
-        spacing="0" 
-        allow-overlap="true"
-    >
-      [count_text]
-    </ShieldSymbolizer>
-  </Rule>
-</Style>
-
-    <Layer name="layer" srs="+proj=longlat +datum=WGS84 +no_defs  <>">
-      <StyleName>layer0</StyleName>
-        <Datasource>
-            <Parameter name="type">geojson</Parameter>
-            <Parameter name="file">./trees.geojson</Parameter>
-            <!--
-            <Parameter name="inline"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[0,80]}},{"type":"Feature","geometry":{"type":"Point","coordinates":[100,0]}}]}]]></Parameter>
-            -->
-            <!--
-            <Parameter name="inline"><![CDATA[{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"MultiPoint","coordinates":[[0,0], [100,20], [1,0],[-90, -10]]},"properties":{"marker-color":"7e7e7e","marker-size":"medium","symbol":"-","name":"Dinagat Islands","marker-path":"/pin_29px.png"}}]}]]></Parameter>
-            -->
-        </Datasource>
-    </Layer>
-
-
-</Map>
-`;
-
 const xmlJson = `
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Map[]>
@@ -394,8 +296,66 @@ const xmlJson = `
 </Map>
 `;
 
+const xmlJsonForTree = `
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map font-directory="../test/data/map-a/" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs" maximum-extent="-20037508.3,-20037508.3,20037508.3,20037508.3" buffer-size="100">
+
+<Parameters>
+  <Parameter name="maximum-extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
+  <Parameter name="format">png</Parameter>
+  <Parameter name="markers_symbolizer_caches_disabled"><![CDATA[false]]></Parameter>
+  <Parameter name="interactivity_layer">layer0</Parameter>
+  <Parameter name="interactivity_fields">id</Parameter>
+</Parameters>
+
+<!--
+<Style name="style" opacity=".5" >
+    <Rule>
+        <PolygonSymbolizer fill="black" clip="false"/>
+    </Rule>
+</Style>
+
+<Layer name="world" >
+    <StyleName>style</StyleName>
+    <Datasource>
+        <Parameter name="file">data/world_merc.shp</Parameter>
+        <Parameter name="encoding">iso-8859-1</Parameter>
+        <Parameter name="type">shape</Parameter>
+    </Datasource>
+</Layer>
+-->
+
+<Style name="layer0" filter-mode="first" >
+  <Rule>
+    <PointSymbolizer
+      file="../greenstand/images/pin_29px.png"
+      opacity="1.0"
+      allow-overlap="true"
+      ignore-placement="true"
+      />
+    <!--
+    <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
+    -->
+  </Rule>
+</Style>
+
+
+<Layer name="l1" srs="+proj=longlat +datum=WGS84 +no_defs  <>">
+    <StyleName>layer0</StyleName>
+    <Datasource>
+        <Parameter name="type">geojson</Parameter>
+        <Parameter name="inline"><![CDATA[json_data]]></Parameter>
+    </Datasource>
+</Layer>
+
+
+</Map>
+`;
+
 module.exports = {
   xml,
   xmlTree,
   xmlJson,
+  xmlJsonForTree,
 }
