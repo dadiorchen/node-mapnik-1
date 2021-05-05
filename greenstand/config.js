@@ -115,8 +115,28 @@ class Config {
       bounds,
     } = options;
     const zoomLevelInt = parseInt(zoomLevel);
-    const useGeoJson = (zoomLevelInt >= 1 && zoomLevelInt <= 23) ? true: false;
-    const useBounds = zoomLevelInt > 6;
+    const useGeoJson = (
+      (zoomLevelInt >= 1 && zoomLevelInt <= 23) ||
+      map_name //map_name use geojson
+    ) ? true: false;
+    function checkUseBounds(){
+      if(map_name){
+        log.warn("org map always use global data set");
+        return false;
+      }else if(wallet){
+        log.warn("wallet map always use global data set");
+        return false;
+      }else if(userid){
+        log.warn("userid map always use global data set");
+        return false;
+      }else if(zoomLevelInt > 6){
+        log.warn("zoom level > 6 use bounds");
+        return true;
+      }else{
+        return false;
+      }
+    }
+    const useBounds = checkUseBounds();
     const map = new Map(this.pool);
     await map.init({
       zoom_level: zoomLevelInt,
