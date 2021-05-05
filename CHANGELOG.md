@@ -1,3 +1,10 @@
+# [4.15.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.14.1...v4.15.0) (2021-05-05)
+
+
+### Features
+
+* be able check version online ([e4d7bf5](https://github.com/Greenstand/node-mapnik-1/commit/e4d7bf5bc89fc89751177ce681cfccb2e499af02))
+
 ## [4.14.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.14.0...v4.14.1) (2021-05-05)
 
 
