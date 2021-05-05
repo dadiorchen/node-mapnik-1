@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const {xml, xmlTree, xmlJson} = require("./xml");
+const {xml, xmlTree, xmlJson, xmlJsonForTree} = require("./xml");
 const Map = require("./Map");
 const log = require("loglevel");
 const PGPool = require("./PGPool");
@@ -115,15 +115,28 @@ class Config {
       bounds,
     } = options;
     const zoomLevelInt = parseInt(zoomLevel);
-    const useGeoJson = (zoomLevelInt >= 1 && zoomLevelInt <= 15) ? true: false;
-    const useBounds = zoomLevelInt > 6;
-    let xmlTemplate;
-    if(zoomLevelInt > 15){
-      xmlTemplate = xmlTree;
-    }else{
-      xmlTemplate = xml;
+    const useGeoJson = (
+      (zoomLevelInt >= 1 && zoomLevelInt <= 23) ||
+      map_name //map_name use geojson
+    ) ? true: false;
+    function checkUseBounds(){
+      if(map_name){
+        log.warn("org map always use global data set");
+        return false;
+      }else if(wallet){
+        log.warn("wallet map always use global data set");
+        return false;
+      }else if(userid){
+        log.warn("userid map always use global data set");
+        return false;
+      }else if(zoomLevelInt > 6){
+        log.warn("zoom level > 6 use bounds");
+        return true;
+      }else{
+        return false;
+      }
     }
-    let xmlString = replace(xmlTemplate);
+    const useBounds = checkUseBounds();
     const map = new Map(this.pool);
     await map.init({
       zoom_level: zoomLevelInt,
@@ -136,10 +149,17 @@ class Config {
     const sql = await map.getQuery();
     log.warn("sql:", sql);
 
+    let result;
+
     //handle geojson case
     if(useGeoJson){
       log.warn("handle geojson...");
-      xmlString = await this.pgPool.getQuery(sql, (result) => {
+      const xmlJsonTemplate = zoomLevelInt > 15?
+        xmlJsonForTree
+        :
+        xmlJson;
+
+      result = await this.pgPool.getQuery(sql, (result) => {
         log.info("result:", result);
         const points = result.rows.map(row => {
           const coord = JSON.parse(row.latlon).coordinates;
@@ -153,18 +173,23 @@ class Config {
           `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":
   {"type":"Point","coordinates": [85,0]},"properties":{"count":1, "count_text": "1", "id": 99999, "latlon": {"type":"Point","coordinates":[85,0]}, "type": "cluster", "zoom_to": null}}]}`;
         log.debug("json:", json);
-        const resultHandled = xmlJson.replace("json_data", json);
+        const resultHandled = xmlJsonTemplate.replace("json_data", json);
         return resultHandled;
       });
-      log.warn("xmlJson length:", xmlJson.length);
-      log.debug("xmlString:", xmlString);
+      log.warn("xml length:", result.length);
+      log.debug("xml:", result);
     }else{
-      xmlString = xmlString.replace(
+      const xmlTemplate = zoomLevelInt > 15?
+        xmlTree
+        :
+        xml;
+      const xmlStringWithDB = replace(xmlTemplate);
+      result = xmlStringWithDB.replace(
         "select * from trees",
         sql,
       );
     }
-    return xmlString;
+    return result;
   }
 
 
