@@ -1,3 +1,17 @@
+# [4.14.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.13.0...v4.14.0) (2021-05-05)
+
+
+### Bug Fixes
+
+* change back to calculate zoom target at zoom level range: 0-9; ([ca1577a](https://github.com/Greenstand/node-mapnik-1/commit/ca1577a7a14fd0d1b3592e325cec1321a2d4e240))
+
+
+### Features
+
+* add env var for pool size in development settings ([1b8e935](https://github.com/Greenstand/node-mapnik-1/commit/1b8e935f5f7c01fb4c5cc3f340e4b49469f8a9d5))
+* can use geojson for tree points; ([ec1284b](https://github.com/Greenstand/node-mapnik-1/commit/ec1284b659c251dc5ee1b681347a0cd4348f38c8))
+* let wallet/org/userid map use global data set ([5565d9c](https://github.com/Greenstand/node-mapnik-1/commit/5565d9c085384e97b8f84d009e75d4fd652cf7e1))
+
 # [4.13.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.12.2...v4.13.0) (2021-05-04)
 
 
