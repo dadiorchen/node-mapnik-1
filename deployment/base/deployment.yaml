@@ -23,7 +23,7 @@ spec:
             - name: PORT
               value: "3000"
             - name: PG_POOL_SIZE
-              value: "10"
+              value: "20"
             - name: CACHE_SIZE
               value: "10000"
             - name: CACHE_EXPIRE
