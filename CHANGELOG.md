@@ -1,3 +1,10 @@
+## [4.17.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.17.1...v4.17.2) (2021-05-06)
+
+
+### Bug Fixes
+
+* expand db pool to 20 ([8963d1c](https://github.com/Greenstand/node-mapnik-1/commit/8963d1c01ac91bd1ad52f96298704acbe910410c))
+
 ## [4.17.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.17.0...v4.17.1) (2021-05-06)
 
 
