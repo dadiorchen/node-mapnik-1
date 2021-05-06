@@ -1,3 +1,10 @@
+# [4.16.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.15.0...v4.16.0) (2021-05-06)
+
+
+### Features
+
+* try new test db ([2412df6](https://github.com/Greenstand/node-mapnik-1/commit/2412df670ccf2e583278d233b74e8efd562699cf))
+
 # [4.15.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.14.1...v4.15.0) (2021-05-05)
 
 
