@@ -1,3 +1,10 @@
+## [4.17.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.17.0...v4.17.1) (2021-05-06)
+
+
+### Bug Fixes
+
+* wrong settings ([bcc072b](https://github.com/Greenstand/node-mapnik-1/commit/bcc072bc0141913f0ed06a790c4015f1c08ebc70))
+
 # [4.17.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.16.1...v4.17.0) (2021-05-06)
 
 
