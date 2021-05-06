@@ -1,3 +1,11 @@
+## [4.16.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.16.0...v4.16.1) (2021-05-06)
+
+
+### Bug Fixes
+
+* merge from master ([37d638a](https://github.com/Greenstand/node-mapnik-1/commit/37d638a4d7ca93f79bd2e37e4be9ce4975b51d28))
+* to fail the db ([9142c77](https://github.com/Greenstand/node-mapnik-1/commit/9142c7717f5439e978dd73574cffe7f4165fa800))
+
 # [4.16.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.15.0...v4.16.0) (2021-05-06)
 
 
