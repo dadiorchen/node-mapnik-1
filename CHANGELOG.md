@@ -1,3 +1,10 @@
+# [4.18.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.17.2...v4.18.0) (2021-05-17)
+
+
+### Features
+
+* new connection to pgpool service ([a5df356](https://github.com/Greenstand/node-mapnik-1/commit/a5df356eb82b14164cc94650f3d0fbdaac489ded))
+
 ## [4.17.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.17.1...v4.17.2) (2021-05-06)
 
 
