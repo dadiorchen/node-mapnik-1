@@ -1,3 +1,10 @@
+# [4.19.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.18.2...v4.19.0) (2021-05-17)
+
+
+### Features
+
+* add pgpool config for test env ([8cfa70e](https://github.com/Greenstand/node-mapnik-1/commit/8cfa70ef8585df6eae27102a8f3a67f976783dc7))
+
 ## [4.18.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.18.1...v4.18.2) (2021-05-17)
 
 
