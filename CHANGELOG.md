@@ -1,3 +1,10 @@
+## [4.18.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.18.1...v4.18.2) (2021-05-17)
+
+
+### Bug Fixes
+
+* db connection ([c79507f](https://github.com/Greenstand/node-mapnik-1/commit/c79507f4311a93992a0c029c6d664b6e09265c5a))
+
 ## [4.18.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.18.0...v4.18.1) (2021-05-17)
 
 
