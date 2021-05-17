@@ -1,0 +1,8 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treetracker-tile-server
+  labels:
+    app: treetracker-tile-server
+spec:
+  replicas: 4

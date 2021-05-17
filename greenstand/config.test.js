@@ -1,6 +1,10 @@
+jest.mock("pg");
 const path = require("path");
 const fs = require("fs");
-const {config, configFreetown} = require("./config");
+const {config, configFreetown, getXMLString} = require("./config");
+const xml = require("./xml");
+const { Pool} = require('pg');
+
 
 describe("", () => {
 
@@ -23,7 +27,7 @@ describe("", () => {
 //    mapInstance.load(define, {strict: true},function(err,_map) {
   });
 
-  it.only("config freetown", async () => {
+  it("config freetown", async () => {
     configFreetown();
   const newDefine = path.join(__dirname, '../test/postgis.freetown.prod.xml');
     const newContent = fs.readFileSync(newDefine).toString();
@@ -39,3 +43,136 @@ describe("", () => {
 //    mapInstance.load(define, {strict: true},function(err,_map) {
   });
 });
+
+describe("getXMLString", () => {
+
+  describe("basic", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("level 12", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+      });
+      expect(xmlString).toMatch(/case4/s);
+    });
+
+    it("level 16", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 16,
+      });
+      expect(xmlString).toMatch(/case2/s);
+    });
+  });
+
+  describe("userid", () => {
+
+    it("basic, count = 10", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 10,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("count = 5000", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 5000,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+  });
+
+  describe("wallet", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        wallet: "dadiorchen",
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("count = 5000", async () => {
+      const query = jest.fn()
+        .mockResolvedValue({
+          rows: [{
+            count: 5000,
+          }],
+        });
+      Pool.mockImplementation(() => ({
+        query,
+      }));
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        userid: 1,
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+  });
+
+  describe.only("map_name", () => {
+
+    it("basic", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 2,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("zoom = 12, freetown", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case1/s);
+    });
+
+    it("zoom = 12, !freetown", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 12,
+        map_name: "Haiti",
+      });
+      expect(xmlString).toMatch(/case3/s);
+    });
+
+    it("zoom = 16", async () => {
+      const xmlString = await getXMLString({
+        zoomLevel: 16,
+        map_name: "freetown",
+      });
+      expect(xmlString).toMatch(/case2/s);
+    });
+
+  });
+
+});
+
+

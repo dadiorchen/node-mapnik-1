@@ -1,6 +1,15 @@
 const path = require("path");
 const fs = require("fs");
+const {xml, xmlTree, xmlJson, xmlJsonForTree} = require("./xml");
+const Map = require("./Map");
+const log = require("loglevel");
+const PGPool = require("./PGPool");
 
+
+
+/*
+ * setup the DB connection
+ */
 function replace(content){
   //       <Parameter name="user"><![CDATA[postgres]]></Parameter>
   //       <Parameter name="host"><![CDATA[172.17.0.2]]></Parameter>
@@ -84,4 +93,111 @@ function configFreetown(){
   fs.writeFileSync(newDefine,contentConfig);
 }
 
-module.exports = {config, configFreetown};
+
+class Config {
+  constructor(pool){
+    this.pool = pool;
+    const pgPool = new PGPool({
+      cacheSize: parseInt(process.env.CACHE_SIZE),
+      cacheExpire: parseInt(process.env.CACHE_EXPIRE),
+      pool,
+    });
+    this.pgPool = pgPool;
+  }
+
+  async getXMLString(options){
+    const {
+      zoomLevel,
+      userid,
+      wallet,
+      timeline,
+      map_name,
+      bounds,
+    } = options;
+    const zoomLevelInt = parseInt(zoomLevel);
+    const useGeoJson = (
+      (zoomLevelInt >= 1 && zoomLevelInt <= 23) ||
+      map_name //map_name use geojson
+    ) ? true: false;
+    function checkUseBounds(){
+      if(map_name){
+        log.warn("org map always use global data set");
+        return false;
+      }else if(wallet){
+        log.warn("wallet map always use global data set");
+        return false;
+      }else if(userid){
+        log.warn("userid map always use global data set");
+        return false;
+      }else if(zoomLevelInt > 6){
+        log.warn("zoom level > 6 use bounds");
+        return true;
+      }else{
+        return false;
+      }
+    }
+    const useBounds = checkUseBounds();
+    const map = new Map(this.pool);
+    await map.init({
+      zoom_level: zoomLevelInt,
+      userid,
+      wallet,
+      timeline,
+      map_name,
+      bounds: useBounds? bounds: undefined,//json mode do not need bounds
+    });
+    const sql = await map.getQuery();
+    log.warn("sql:", sql);
+
+    let result;
+
+    //handle geojson case
+    if(useGeoJson){
+      log.warn("handle geojson...");
+      const xmlJsonTemplate = zoomLevelInt > 15?
+        xmlJsonForTree
+        :
+        xmlJson;
+
+      result = await this.pgPool.getQuery(sql, (result) => {
+        log.info("result:", result);
+        const points = result.rows.map(row => {
+          const coord = JSON.parse(row.latlon).coordinates;
+          const count = parseInt(row.count);
+          const {count_text, id, latlon, type, zoom_to} = row;
+          return `{"type":"Feature","geometry":{"type":"Point","coordinates": [${coord.join(",")}]},"properties":{"count":${count}, "count_text": "${count_text}", "id": ${id}, "latlon": ${latlon}, "type": "${type}", "zoom_to": ${zoom_to}}}`;
+        });
+        const json = points.length > 0? 
+          `{"type":"FeatureCollection","features":[${points.join(",")}]}`
+        :
+          `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":
+  {"type":"Point","coordinates": [85,0]},"properties":{"count":1, "count_text": "1", "id": 99999, "latlon": {"type":"Point","coordinates":[85,0]}, "type": "cluster", "zoom_to": null}}]}`;
+        log.debug("json:", json);
+        const resultHandled = xmlJsonTemplate.replace("json_data", json);
+        return resultHandled;
+      });
+      log.warn("xml length:", result.length);
+      log.debug("xml:", result);
+    }else{
+      const xmlTemplate = zoomLevelInt > 15?
+        xmlTree
+        :
+        xml;
+      const xmlStringWithDB = replace(xmlTemplate);
+      result = xmlStringWithDB.replace(
+        "select * from trees",
+        sql,
+      );
+    }
+    return result;
+  }
+
+
+}
+
+module.exports = {
+  config, 
+  configFreetown, 
+  replace,
+  Config,
+};
